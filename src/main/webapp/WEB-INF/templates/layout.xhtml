@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<meta charset="UTF-8" />
+		<title>
+			<ui:insert name="titulo">RAPHASCHOOL</ui:insert>
+		</title>
+		<h:outputStylesheet library="css" name="estilo.css" />
+		<h:outputScript library="js" name="app.js"/>
+	</h:head>
+	<h:body>
+	<p:growl life="5000" autoUpdate="true" />
+	<p:ajaxStatus onstart="PF('status').show();"  onsuccess="PF('status').hide()" />
+	<p:dialog widgetVar="status" closable="false" resizable="false" >
+		Por favor aguarde ...
+	</p:dialog>
+	<div class="ui-fluid ui-grid-responsive">
+	 	<div class="ui-grid-row">
+			<ui:insert name="cabecalho">
+					<h:form id="barraDeFerramentas">
+ 						<p:menubar style="padding: 0px;">
+							<p:submenu style="float: right;" label="Olá #{autenticacao.usuario}!">
+								<p:menuitem value="Logout" action="#{autenticacao.encerrarSessao}" title="Sair do sistema!" />
+							</p:submenu>
+						</p:menubar>						
+						 <p:menu toggleable="true" overlay="false" trigger="false" style="padding: 5px; width: 10%;">					        
+					        <p:submenu label="HOME" outcome="/paginas/principal" />
+							<p:submenu label="Cadastros">
+								<p:menuitem value="Aluno"/>
+								<p:menuitem value="Disciplina"/>
+								<p:menuitem value="Professor" />
+								<p:menuitem value="Quatões"/>
+							</p:submenu>
+							<p:submenu label="Aluno">
+								<p:menuitem value="Avaliação"/>									
+							</p:submenu>
+							<p:submenu label="Acadêmico">
+								<p:menuitem value="Matrícula" />
+								<p:menuitem value="Notas/faltas"/>								
+							</p:submenu>
+							<p:submenu label="Documentos">
+								<p:menuitem value="Histórico"/>
+								<p:menuitem value="Declarações"/>
+								<p:menuitem value="Relatórios"/>
+							</p:submenu>				        
+					    </p:menu>						
+					</h:form>
+			</ui:insert>
+			<ui:insert name="corpo"/>
+			<ui:insert name="rodape">
+					<hr />
+					<div class="rodape" align="center">
+						Todos os direitos reservados - 2016
+					</div>
+			</ui:insert>
+		</div>
+	</div>
+	
+	<h:form>
+		<p:confirmDialog global="true" header="Confirmação de exclusão!">
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				
+				<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		</p:confirmDialog>
+	</h:form>
+	
+	<script>
+			PrimeFaces.locales['pt'] = {
+				closeText : 'Fechar',
+				prevText : 'Anterior',
+				nextText : 'Próximo',
+				currentText : 'Começo',
+				monthNames : [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
+						'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro',
+						'Dezembro' ],
+				monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul',
+						'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
+				dayNames : [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta',
+						'Sexta', 'Sábado' ],
+				dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ],
+				dayNamesMin : [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+				weekHeader : 'Semana',
+				firstDay : 0,
+				isRTL : false,
+				showMonthAfterYear : false,
+				yearSuffix : '',
+				timeOnlyTitle : 'Só Horas',
+				timeText : 'Tempo',
+				hourText : 'Hora',
+				minuteText : 'Minuto',
+				secondText : 'Segundo',
+				ampm : false,
+				month : 'Mês',
+				week : 'Semana',
+				day : 'Dia',
+				allDayText : 'Todo o Dia'
+			};
+			onkeydown="if(event.keyCode==13) event.keyCode=9;";
+		</script>
+	</h:body>
+</html>
