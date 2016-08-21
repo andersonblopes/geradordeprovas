@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	<ui:define name="titulo">RAPHASCHOOL - Cadastro de disciplina</ui:define>
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:viewAction action="#{disciplinaBean.iniciar}" />
+		</f:metadata>
+		<p:panel header="Cadastro de disciplina" styleClass="panel-formulario">
+			<h:form id="frm-disciplina">
+				<p:focus for="disciplina" />
+				<p:panelGrid columns="4" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-3, ui-grid-col-2, ui-grid-col-2">
+					<p:panelGrid>
+						<p:outputLabel value="Código" for="codigo" />
+						<p:inputText styleClass="somente-leitura" readonly="true" disabled="#{empty disciplinaBean.disciplina}" id="codigo" value="#{disciplinaBean.disciplina.pkdisciplina}"/>
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Descrição da disciplina" for="disciplina" />
+						<p:inputText id="disciplina" value="#{disciplinaBean.disciplina.disciplina}" required="true" onkeyup="maiusculo(this)" disabled="#{empty disciplinaBean.disciplina}" />
+					</p:panelGrid>							
+					<p:panelGrid>
+						<p:outputLabel value="Carga horária" for="carga-horaria" />
+						<p:inputText id="carga-horaria" value="#{disciplinaBean.disciplina.cargaHoraria}" required="true"  onkeyup="maiusculo(this)" disabled="#{empty disciplinaBean.disciplina}" />
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Código MEC" for="codmec" />
+						<p:inputText id="codmec" value="#{disciplinaBean.disciplina.codMec}" required="true" onkeyup="maiusculo(this)" disabled="#{empty disciplinaBean.disciplina}" />
+					</p:panelGrid>	
+				</p:panelGrid>
+				<p:panelGrid columns="3" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-1, ui-grid-col-1">
+					<p:commandButton value="Novo" action="#{disciplinaBean.novo}" rendered="#{empty disciplinaBean.disciplina}" update="frm-disciplina" />
+					<p:commandButton value="Salvar" action="#{disciplinaBean.salvar}" rendered="#{not empty disciplinaBean.disciplina}" update="frm-disciplina frm-localizar" />
+					<p:commandButton value="Excluir" action="#{disciplinaBean.remover}" update="frm-disciplina frm-localizar" process="@this" disabled="#{empty disciplinaBean.disciplina.pkdisciplina}" >
+						<p:confirm message="Tem certeza que deseja excluir o registro?" />
+					</p:commandButton>
+					<p:commandButton value="Cancelar" action="#{disciplinaBean.limpar}" disabled="#{empty disciplinaBean.disciplina}" update="frm-disciplina" immediate="true" resetValues="true" />
+				</p:panelGrid>
+			</h:form>
+			<p:separator />
+			<h:form id="frm-localizar">
+				<p:panelGrid columns="3" layout="grid" id="pnl-pesquisa" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-5, ui-grid-col-1, ui-grid-col-6">
+					<p:inputText id="nome-disciplina" title="Pesquisa pela descrição da disciplina." onkeyup="maiusculo(this)" value="#{disciplinaBean.nomeDisciplina}" placeholder="Descrição da disciplina" />
+					<p:commandButton value="Buscar" action="#{disciplinaBean.pesquisar}" update="frm-localizar" />
+					<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-noborder" style="float: right;">
+						<p:commandLink title="Exportar para XLS" ajax="false" immediate="true" disabled="#{empty disciplinaBean.disciplinas}" >
+							<h:graphicImage library="img/png" name="xls.png" width="15" />
+							<p:dataExporter type="xls" encoding="#{usuario.encoding}" target="lista-de-disciplinas" fileName="Relação_disciplinas"/>
+						</p:commandLink>
+						<p:commandLink title="Exporat para pdf" ajax="false" immediate="true" disabled="#{empty disciplinaBean.disciplinas}" >
+							<h:graphicImage library="img/png" name="pdf.png" width="15" />
+			   				<p:dataExporter type="pdf" encoding="#{usuario.encoding}" target="lista-de-disciplinas" fileName="Relação_disciplinas" />
+						</p:commandLink>
+					</p:panelGrid>
+				</p:panelGrid>
+				<p:dataTable 
+					value="#{disciplinaBean.disciplinas}" 
+					id="lista-de-disciplinas" 
+					var="d" 
+					rows="6"
+					emptyMessage="Nenhum registro satisfaz à pesquisa." 
+					paginator="true" reflow="true" 
+					paginatorAlwaysVisible="false" 
+					paginatorPosition="bottom" 
+					selection="#{disciplinaBean.disciplina}" 
+					selectionMode="single" 
+					rowKey="#{d.pkdisciplina}">
+					<p:ajax event="rowSelect" update="frm-disciplina" />
+		 			<p:ajax event="rowUnselect" update="frm-disciplina" />
+					<p:column headerText="Código" styleClass="coluna-codigo">
+						<p:outputLabel value="#{d.pkdisciplina}" />
+					</p:column>
+					<p:column headerText="Disciplina">
+						<p:outputLabel value="#{d.disciplina}" />
+					</p:column>
+					<p:column headerText="Carga horária" styleClass="coluna-cpf">
+						<p:outputLabel value="#{d.cargaHoraria}" />
+					</p:column>
+					<p:column headerText="Cód MEC" styleClass="coluna-cpf">
+						<p:outputLabel value="#{d.codMec}" />
+					</p:column>						
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

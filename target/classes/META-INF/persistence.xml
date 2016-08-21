@@ -5,35 +5,13 @@
 	<persistence-unit name="LMSPU">
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>com.lmsystem.modelo.Bairro</class>
-		<class>com.lmsystem.modelo.Banco</class>
-		<class>com.lmsystem.modelo.Contato</class>
-		<class>com.lmsystem.modelo.Deposito</class>
-		<class>com.lmsystem.modelo.Endereco</class>
-		<class>com.lmsystem.modelo.EstadoCivil</class>
-		<class>com.lmsystem.modelo.Etnia</class>
-		<class>com.lmsystem.modelo.GrupoProduto</class>
-		<class>com.lmsystem.modelo.Municipio</class>
-		<class>com.lmsystem.modelo.Nacionalidade</class>
-		<class>com.lmsystem.modelo.Operadora</class>
-		<class>com.lmsystem.modelo.PessoaFisica</class>
-		<class>com.lmsystem.modelo.PessoaJuridica</class>
-		<class>com.lmsystem.modelo.Produto</class>
-		<class>com.lmsystem.modelo.RacaCor</class>
-		<class>com.lmsystem.modelo.Setor</class>
-		<class>com.lmsystem.modelo.Sexo</class>
-		<class>com.lmsystem.modelo.SubGrupoProduto</class>
-		<class>com.lmsystem.modelo.TipoDocumento</class>
-		<class>com.lmsystem.modelo.TipoLogradouro</class>
-		<class>com.lmsystem.modelo.Uf</class>
-		<class>com.lmsystem.modelo.UnidadeProduto</class>
-		<class>com.lmsystem.modelo.Usuario</class>
-		<class>com.lmsystem.modelo.Pais</class>
+		<class>geradordeprovas.modelo.Disciplina</class>
+		<class>geradordeprovas.modelo.Professor</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:postgresql://192.168.0.200:5432/lmsysedu" />
+				value="jdbc:postgresql://192.168.0.200:5432/geradordeprovas" />
 			<property name="javax.persistence.jdbc.user" value="postgres" />
 			<property name="javax.persistence.jdbc.password" value="st97ch19" />
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />

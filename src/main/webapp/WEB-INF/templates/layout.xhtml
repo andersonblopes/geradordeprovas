@@ -19,21 +19,26 @@
 		Por favor aguarde ...
 	</p:dialog>
 	<div class="ui-fluid ui-grid-responsive">
-	 	<div class="ui-grid-row">
+		<h:form>
+			<p:panelGrid columns="1" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-12">
+				<p:menubar style="padding: 0px;">
+					<p:menuitem value="HOME"  outcome="/paginas/principal" />
+					<p:submenu style="float: right;" label="Olá #{autenticacao.usuario}!">
+						<p:menuitem value="Logout" action="#{autenticacao.encerrarSessao}" title="Sair do sistema!" />
+					</p:submenu>
+				</p:menubar>
+			</p:panelGrid>
+		</h:form>
+	 	<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-2, ui-grid-col-10">
 			<ui:insert name="cabecalho">
-					<h:form id="barraDeFerramentas">
- 						<p:menubar style="padding: 0px;">
-							<p:submenu style="float: right;" label="Olá #{autenticacao.usuario}!">
-								<p:menuitem value="Logout" action="#{autenticacao.encerrarSessao}" title="Sair do sistema!" />
-							</p:submenu>
-						</p:menubar>						
-						 <p:menu toggleable="true" overlay="false" trigger="false" style="padding: 5px; width: 10%;">					        
-					        <p:submenu label="HOME" outcome="/paginas/principal" />
+				<h:form>
+					<p:panelGrid>
+						 <p:menu toggleable="true" overlay="false" trigger="false" style="padding: 5px;">					        
 							<p:submenu label="Cadastros">
 								<p:menuitem value="Aluno"/>
-								<p:menuitem value="Disciplina"/>
-								<p:menuitem value="Professor" />
-								<p:menuitem value="Quatões"/>
+								<p:menuitem value="Disciplina" outcome="/paginas/disciplina"/>
+								<p:menuitem value="Professor" outcome="/paginas/professor" />
+								<p:menuitem value="Quatões" outcome="/paginas/questao" />
 							</p:submenu>
 							<p:submenu label="Aluno">
 								<p:menuitem value="Avaliação"/>									
@@ -47,19 +52,21 @@
 								<p:menuitem value="Declarações"/>
 								<p:menuitem value="Relatórios"/>
 							</p:submenu>				        
-					    </p:menu>						
-					</h:form>
+					    </p:menu>	
+					</p:panelGrid>		
+				</h:form>			
 			</ui:insert>
-			<ui:insert name="corpo"/>
-			<ui:insert name="rodape">
-					<hr />
-					<div class="rodape" align="center">
-						Todos os direitos reservados - 2016
-					</div>
-			</ui:insert>
-		</div>
+			<p:panelGrid columns="1" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-12">
+				<ui:insert name="corpo"/>
+			</p:panelGrid>
+		</p:panelGrid>
+		<ui:insert name="rodape">
+				<hr />
+				<div class="rodape" align="center">
+					Todos os direitos reservados - 2016
+				</div>
+		</ui:insert>
 	</div>
-	
 	<h:form>
 		<p:confirmDialog global="true" header="Confirmação de exclusão!">
 			<p:commandButton value="Não" type="button"
