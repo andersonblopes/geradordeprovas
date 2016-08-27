@@ -1,4 +1,4 @@
-package geradordeprovas.controller;
+package geradordeprovas.controller.cadastros;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import geradordeprovas.modelo.Disciplina;
-import geradordeprovas.service.DisciplinaRN;
+import geradordeprovas.service.cadastros.DisciplinaService;
 
 @Named
 @ViewScoped
@@ -25,7 +25,7 @@ public class DisciplinaBean implements Serializable {
 	private List<Disciplina> disciplinas;
 
 	@Inject
-	protected DisciplinaRN disciplinaRN;
+	protected DisciplinaService disciplinaRN;
 
 	public void iniciar() {
 		this.setNomeDisciplina("");

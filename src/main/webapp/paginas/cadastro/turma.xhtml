@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	<ui:define name="titulo">RAPHASCHOOL - Turma</ui:define>
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:viewAction action="#{turmaBean.iniciar}" />
+		</f:metadata>
+		<div class="ui-fluid">
+			<p:panel header="Cadastro de turma" styleClass="panel-formulario">
+				<h:form id="frm-turma">
+					<p:focus for="turma" />
+					<p:panelGrid columns="6" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-4, ui-grid-col-1, ui-grid-col-1, ui-grid-col-1, ui-grid-col-4">
+						<p:panelGrid>
+							<p:outputLabel value="Código" for="codigo" />
+							<p:inputText styleClass="somente-leitura" readonly="true" disabled="#{empty turmaBean.turma}" id="codigo" value="#{turmaBean.turma.pkturma}"/>
+						</p:panelGrid>
+						<p:panelGrid>
+							<p:outputLabel value="Descrição da turma" for="turma" />
+							<p:inputText id="turma" value="#{turmaBean.turma.turma}" required="true" onkeyup="maiusculo(this)" disabled="#{empty turmaBean.turma}" />
+						</p:panelGrid>							
+						<p:panelGrid>
+							<p:outputLabel value="CódigoMEC" for="codmec" />
+							<p:inputText id="codmec" value="#{turmaBean.turma.codmec}" required="true" onkeyup="maiusculo(this)" disabled="#{empty turmaBean.turma}" />
+						</p:panelGrid>					
+						<p:panelGrid>
+							<p:outputLabel value="Hr. Ini." for="hora-inicial" />
+							<p:inputMask id="hora-inicial" value="#{turmaBean.turma.horaInicial}" required="true"  mask="99:99" disabled="#{empty turmaBean.turma}" />
+						</p:panelGrid>
+						<p:panelGrid>
+							<p:outputLabel value="Hr. Fim" for="hora-final" />
+							<p:inputMask id="hora-final" value="#{turmaBean.turma.horaFinal}" required="true"  mask="99:99" disabled="#{empty turmaBean.turma}" />
+						</p:panelGrid>
+						<p:panelGrid>
+							<p:outputLabel value="Tipo turma" for="tipo-turma" />
+							<p:autoComplete id="tipo-turma" 
+								value="#{turmaBean.turma.tipoturma}" 
+								title="Selecione o tipo da turma"
+								disabled="#{empty turmaBean.turma}"
+								required="true"
+								var="t"
+								itemLabel="#{t.tipoturma}"
+								itemValue="#{t}"
+								completeMethod="#{turmaBean.listarTiposTurma}"
+								minQueryLength="1"
+								maxResults="100"
+								queryDelay="1000"
+								effect="blind"
+								dropdownMode="current"
+								forceSelection="true"
+								scrollHeight="150" />
+						</p:panelGrid>
+					</p:panelGrid>
+					<p:panelGrid columns="3" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-1, ui-grid-col-1">
+						<p:commandButton value="Novo" action="#{turmaBean.novo}" rendered="#{empty turmaBean.turma}" update="frm-turma" />
+						<p:commandButton value="Salvar" action="#{turmaBean.salvar}" rendered="#{not empty turmaBean.turma}" update="frm-turma frm-localizar" />
+						<p:commandButton value="Excluir" action="#{turmaBean.remover}" update="frm-turma frm-localizar" process="@this" disabled="#{empty turmaBean.turma.pkturma}" >
+							<p:confirm icon="ui-icon-alert" message="Tem certeza que deseja excluir o registro?" />
+						</p:commandButton>
+						<p:commandButton value="Cancelar" action="#{turmaBean.limpar}" disabled="#{empty turmaBean.turma}" update="frm-turma" immediate="true" resetValues="true" />
+					</p:panelGrid>
+				</h:form>
+				<p:separator />
+				<h:form id="frm-localizar">
+					<p:panelGrid columns="3" layout="grid" id="pnl-pesquisa" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-5, ui-grid-col-1, ui-grid-col-6">
+						<p:inputText id="nome-turma" title="Pesquisa pela descrição da turma." onkeyup="maiusculo(this)" value="#{turmaBean.nomeTurma}" placeholder="Descrição da turma" disabled="#{empty turmaBean.turmas}" />
+						<p:commandButton value="Pesquisar" action="#{turmaBean.pesquisar}" update="frm-localizar" disabled="#{empty turmaBean.turmas}" />
+						<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-noborder" style="float: right;">
+							<p:commandLink title="Exportar para XLS" ajax="false" immediate="true" disabled="#{empty turmaBean.turmas}" >
+								<h:graphicImage library="img/png" name="xls.png" width="15" />
+								<p:dataExporter type="xls" encoding="#{usuario.encoding}" target="lista-de-turmas" fileName="Relação_turmas"/>
+							</p:commandLink>
+							<p:commandLink title="Exporat para pdf" ajax="false" immediate="true" disabled="#{empty turmaBean.turmas}" >
+								<h:graphicImage library="img/png" name="pdf.png" width="15" />
+				   				<p:dataExporter type="pdf" encoding="#{usuario.encoding}" target="lista-de-turmas" fileName="Relação_turmas" />
+							</p:commandLink>
+						</p:panelGrid>
+					</p:panelGrid>
+					<p:dataTable 
+						value="#{turmaBean.turmas}" 
+						id="lista-de-turmas" 
+						var="t" 
+						rows="10"
+						emptyMessage="Nenhum registro satisfaz à pesquisa." 
+						paginator="true" reflow="true" 
+						paginatorAlwaysVisible="false" 
+						paginatorPosition="bottom" 
+						selection="#{turmaBean.turma}" 
+						selectionMode="single" 
+						rowKey="#{t.pkturma}">
+						<p:ajax event="rowSelect" update="frm-turma" />
+			 			<p:ajax event="rowUnselect" update="frm-turma" />
+						<p:column headerText="Código" styleClass="coluna-codigo">
+							<p:outputLabel value="#{t.pkturma}" />
+						</p:column>
+						<p:column headerText="Turma">
+							<p:outputLabel value="#{t.turma}" />
+						</p:column>
+						<p:column headerText="Tipo" styleClass="coluna-cpf">
+							<p:outputLabel value="#{t.tipoturma.tipoturma}" />
+						</p:column>						
+					</p:dataTable>
+				</h:form>
+			</p:panel>
+		</div>
+	</ui:define>
+</ui:composition>

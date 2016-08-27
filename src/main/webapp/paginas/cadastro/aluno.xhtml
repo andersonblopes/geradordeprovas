@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	<ui:define name="titulo">RAPHASCHOOL - Aluno</ui:define>
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:viewAction action="#{alunoBean.iniciar}" />
+		</f:metadata>
+		<p:panel header="Cadastro de aluno" styleClass="panel-formulario">
+			<h:form id="frm-pessoafisica">
+				<p:focus for="nome" />
+				<p:panelGrid columns="3" 
+					layout="grid"
+					styleClass="panelgrid-noborder"  
+					columnClasses="ui-grid-col-1, ui-grid-col-10, ui-grid-col-1">
+					<p:panelGrid>
+						<p:outputLabel value="Código" for="codigo" />
+						<p:inputText styleClass="somente-leitura" readonly="true" id="codigo" disabled="#{empty alunoBean.relPessoaTipo}" value="#{alunoBean.relPessoaTipo.pessoaFisica.pkpessoafisica}" />
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Aluno" for="nome" />
+						<p:inputText label="Nome" id="nome"	disabled="#{empty alunoBean.relPessoaTipo.pessoaFisica}" required="true" styleClass="text-uppercase" onkeyup="maiusculo(this)" value="#{alunoBean.relPessoaTipo.pessoaFisica.nome}" />
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Nascimento" for="dtnasc" />
+						<p:calendar id="dtnasc"
+							disabled="#{empty alunoBean.relPessoaTipo.pessoaFisica}"
+							locale="#{usuario.locale}" required="true" navigator="true" mask="true"
+							value="#{alunoBean.relPessoaTipo.pessoaFisica.datanascimento}" />
+					</p:panelGrid>
+				</p:panelGrid>
+				<p:panelGrid columns="4" 
+					layout="grid"
+					styleClass="panelgrid-noborder"  
+					columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-5, ui-grid-col-3">
+					<p:panelGrid>
+						<p:outputLabel value="Sexo" for="sexo" />
+						<p:autoComplete id="sexo"
+							value="#{alunoBean.relPessoaTipo.pessoaFisica.sexo}"
+							title="Selecione o sexo do aluno."
+							disabled="#{empty alunoBean.relPessoaTipo}"
+							required="true"
+							var="sexo"
+							itemLabel="#{sexo.sexo}" 
+							itemValue="#{sexo}"
+							completeMethod="#{alunoBean.listarSexos}"
+							minQueryLength="1"
+							maxResults="100"
+							queryDelay="1000"
+							effect="blind"
+							dropdownMode="current"
+							forceSelection="true"
+							scrollHeight="150"/>
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="RaçaCor" for="racacor"/>
+						<p:autoComplete id="racacor"
+							value="#{alunoBean.relPessoaTipo.pessoaFisica.racaCor}"
+							title="Selecione a RaçaCor do aluno."
+							disabled="#{empty alunoBean.relPessoaTipo}"
+							required="true"
+							var="racacor"
+							itemLabel="#{racacor.racacor}" 
+							itemValue="#{racacor}"
+							completeMethod="#{alunoBean.listarRacasCor}"
+							minQueryLength="1"
+							maxResults="100"
+							queryDelay="1000"
+							effect="blind"
+							dropdownMode="current"
+							forceSelection="true"
+							scrollHeight="150"/>
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel 
+							value="Naturalidade" 
+							for="naturalidade" />
+							<p:autoComplete id="naturalidade"
+								value="#{alunoBean.relPessoaTipo.pessoaFisica.municipio}"
+								title="Selecione a naturalidade do aluno."
+								disabled="#{empty alunoBean.relPessoaTipo}"
+								var="naturalidade"
+								itemLabel="#{naturalidade.municipio} #{naturalidade.uf.sigla}" 
+								itemValue="#{naturalidade}"
+								completeMethod="#{alunoBean.listarMunicipios}"
+								minQueryLength="1"
+								maxResults="100"
+								queryDelay="1000"
+								effect="blind"
+								dropdownMode="current"
+								forceSelection="true"
+								scrollHeight="150"/>
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Nacionalidade" for="nacionalidade" />
+						<p:autoComplete id="nacionalidade"
+							value="#{alunoBean.relPessoaTipo.pessoaFisica.nacionalidade}"
+							title="Selecione a nacionalidade da pessoa."
+							disabled="#{empty alunoBean.relPessoaTipo}"
+							var="nacionalidade"
+							itemLabel="#{nacionalidade.nacionalidade}" 
+							itemValue="#{nacionalidade}"
+							completeMethod="#{alunoBean.listarNacionalidades}"
+							minQueryLength="1"
+							maxResults="100"
+							queryDelay="1000"
+							effect="blind"
+							dropdownMode="current"
+							forceSelection="true"
+							scrollHeight="150"/>		
+					</p:panelGrid>
+				</p:panelGrid>
+				<p:panelGrid columns="4"
+					layout="grid"
+					styleClass="panelgrid-noborder"  
+					columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-4, ui-grid-col-4">
+					<p:panelGrid>
+						<p:outputLabel value="CPF" for="cpf" />
+						<p:inputMask id="cpf" mask="999.999.999-99" disabled="#{empty alunoBean.relPessoaTipo}" value="#{alunoBean.relPessoaTipo.pessoaFisica.cpf}" />
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Celular" for="celular" />
+						<p:inputMask id="celular" mask="(99) 99999-9999" converter="converterInput"
+							disabled="#{empty alunoBean.relPessoaTipo}" value="#{alunoBean.relPessoaTipo.pessoaFisica.contato.celular1}" />
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="email" for="email" />
+						<p:inputText id="email"  disabled="#{empty alunoBean.relPessoaTipo}" 
+							onkeyup="minusculo(this)"
+							value="#{alunoBean.relPessoaTipo.pessoaFisica.contato.email}" />
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Mãe" for="mae" />
+						<p:inputText label="Mae" id="mae" disabled="#{empty alunoBean.relPessoaTipo}"
+							onkeyup="maiusculo(this)"
+							value="#{alunoBean.relPessoaTipo.pessoaFisica.mae}" />
+					</p:panelGrid>
+				</p:panelGrid>
+				<p:panelGrid columns="7" layout="grid" styleClass="panelgrid-noborder"  
+					columnClasses="ui-grid-col-1, ui-grid-col-2, ui-grid-col-1, ui-grid-col-3, ui-grid-col-1, ui-grid-col-2, ui-grid-col-2">
+ 					<p:panelGrid>
+	 					<p:outputLabel value="CEP" for="cep" />
+						<p:inputText id="cep" value="#{alunoBean.relPessoaTipo.pessoaFisica.endereco.cep}" disabled="#{empty alunoBean.relPessoaTipo}">
+							<p:ajax event="blur" listener="#{alunoBean.buscarCEP}" update="municipio endereco bairro"/>
+						</p:inputText>
+ 					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Município" for="municipio" />
+						<p:autoComplete id="municipio"
+								value="#{alunoBean.relPessoaTipo.pessoaFisica.endereco.municipio}"
+								title="Selecione o Município do endereço do aluno." 
+								disabled="#{empty alunoBean.relPessoaTipo}"
+								var="municipio"
+								itemValue="#{municipio}"
+								itemLabel="#{municipio.municipio} #{municipio.uf.sigla}" 
+								completeMethod="#{alunoBean.listarMunicipios}"
+								minQueryLength="1"
+								maxResults="100"
+								queryDelay="1000"
+								effect="blind"
+								dropdownMode="current"
+								forceSelection="true"
+								scrollHeight="150"/>
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Tp. Logr." for="tipologradouro" />
+						<p:autoComplete id="tipologradouro"
+							value="#{alunoBean.relPessoaTipo.pessoaFisica.endereco.tipoLogradouro}"
+							title="Selecione o Tipo de Logradouro do endereço do aluno."
+							disabled="#{empty alunoBean.relPessoaTipo}" 
+							var="tipologradouro"
+							itemValue="#{tipologradouro}"
+							itemLabel="#{tipologradouro.tipologradouro}" 
+							completeMethod="#{alunoBean.listarTiposLogradouro}"
+							minQueryLength="1"
+							maxResults="100"
+							queryDelay="1000"
+							effect="blind"
+							dropdownMode="current"
+							forceSelection="true"
+							scrollHeight="150"/>		
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Logradouro (Endereço)" for="endereco" />
+						<p:inputText id="endereco"  disabled="#{empty alunoBean.relPessoaTipo}" 
+							onkeyup="maiusculo(this)"
+							value="#{alunoBean.relPessoaTipo.pessoaFisica.endereco.endereco}" />
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Nº" for="numero" />
+						<p:inputText id="numero"  disabled="#{empty alunoBean.relPessoaTipo}" 
+							onkeyup="maiusculo(this)"
+							value="#{alunoBean.relPessoaTipo.pessoaFisica.endereco.numero}" />
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Complemento" for="complemento" />
+						<p:inputText id="complemento"  disabled="#{empty alunoBean.relPessoaTipo}" 
+							onkeyup="maiusculo(this)"
+							value="#{alunoBean.relPessoaTipo.pessoaFisica.endereco.complemento}" />
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Bairro" for="bairro" />
+						<p:autoComplete id="bairro"
+							value="#{alunoBean.relPessoaTipo.pessoaFisica.endereco.bairro}"
+							title="Selecione o bairro do endereço do aluno."
+							disabled="#{empty alunoBean.relPessoaTipo}" 
+							var="bairro"
+							itemValue="#{bairro}"
+							itemLabel="#{bairro.bairro}" 
+							completeMethod="#{alunoBean.listarBairros}"
+							minQueryLength="1"
+							maxResults="100"
+							queryDelay="1000"
+							effect="blind"
+							dropdownMode="current"
+							forceSelection="true"
+							scrollHeight="150"/>
+					</p:panelGrid>
+				</p:panelGrid>
+				<p:panelGrid  columns="3" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-1, ui-grid-col-1">
+					<p:commandButton value="Novo" action="#{alunoBean.novo}" rendered="#{empty alunoBean.relPessoaTipo}" update="frm-pessoafisica" />
+					<p:commandButton value="Salvar" action="#{alunoBean.salvar}" icon="fa fa-save" rendered="#{not empty alunoBean.relPessoaTipo}" update="frm-pessoafisica frm-localizar" />
+					<p:commandButton value="Excluir" action="#{alunoBean.remover}" process="@this" icon="fa fa-remove" update="frm-pessoafisica frm-localizar" disabled="#{empty alunoBean.relPessoaTipo.pessoaFisica.pkpessoafisica}" >
+						<p:confirm icon="ui-icon-alert" message="Tem certeza que deseja excluir o registro?" />
+					</p:commandButton>
+					<p:commandButton value="Cancelar" icon="fa fa-refresh" action="#{alunoBean.limpar}" disabled="#{empty alunoBean.relPessoaTipo}" update="frm-pessoafisica" immediate="true" resetValues="true" />
+				</p:panelGrid>
+			</h:form>
+			<p:separator />
+			<h:form id="frm-localizar">
+				<p:panelGrid id="pnl-pesquisa" columns="3" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-5, ui-grid-col-1, ui-grid-col-6">
+					<p:inputText id="nome-unidade" value="#{alunoBean.nomePessoa}" onkeyup="maiusculo(this)" title="Pesquisa pelo nome do aluno."
+						placeholder="Pesquisar pelo nome do aluno" disabled="#{empty alunoBean.alunos}" />
+					<p:commandButton value="Pesquisar" action="#{alunoBean.pesquisar}" icon="fa fa-search" update="frm-pessoafisica frm-localizar" disabled="#{empty alunoBean.alunos}" />
+					<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-noborder" style="float: right;">
+						<p:commandLink title="Exportar para XLS" ajax="false" immediate="true" disabled="#{empty alunoBean.alunos}">
+							<h:graphicImage library="img/png" name="xls.png" width="15" />
+							<p:dataExporter type="xls" encoding="#{usuario.encoding}" target="lista-pessoas" fileName="Relação_alunos"/>
+						</p:commandLink>
+						<p:commandLink title="Exporat para pdf" ajax="false" immediate="true" disabled="#{empty alunoBean.alunos}">
+							<h:graphicImage library="img/png" name="pdf.png" width="15" />
+			   				<p:dataExporter type="pdf" encoding="#{usuario.encoding}" target="lista-pessoas" fileName="Relação_alunos" />
+						</p:commandLink>
+					</p:panelGrid>
+				</p:panelGrid>
+				<p:dataTable 
+					value="#{alunoBean.alunos}" id="lista-pessoas" 
+					var="a" rows="5" paginator="true" reflow="true"
+					paginatorAlwaysVisible="false" paginatorPosition="bottom"
+					emptyMessage="Nenhum registro satisfaz à pesquisa."
+					selection="#{alunoBean.relPessoaTipo}"
+					selectionMode="single" rowKey="#{a.pkrelpessoatipo}">
+					<p:ajax event="rowSelect" update="frm-pessoafisica" />
+					<p:ajax event="rowUnselect" update="frm-pessoafisica" />
+					<p:column headerText="Pront." styleClass="coluna-codigo">
+						<p:outputLabel value="#{a.pkrelpessoatipo}" />
+					</p:column>
+					<p:column headerText="Nome">
+						<p:outputLabel value="#{a.pessoaFisica.nome}" />
+					</p:column>
+					<p:column headerText="CPF" styleClass="coluna-cpf">
+						<p:outputLabel value="#{a.pessoaFisica.cpf}" />
+					</p:column>
+					<p:column headerText="Nascimento" styleClass="coluna-cpf">
+						<p:outputLabel value="#{a.pessoaFisica.datanascimento}">
+							<f:convertDateTime />
+						</p:outputLabel>
+					</p:column>
+					<p:column headerText="Mãe">
+						<p:outputLabel value="#{a.pessoaFisica.mae}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

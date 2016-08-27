@@ -1,4 +1,4 @@
-package geradordeprovas.service;
+package geradordeprovas.service.cadastros;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,7 +9,7 @@ import geradordeprovas.modelo.Disciplina;
 import geradordeprovas.repository.DisciplinaRepository;
 import geradordeprovas.util.Transacional;
 
-public class DisciplinaRN implements Serializable {
+public class ProfessorService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
