@@ -15,6 +15,10 @@ public class TurmaRepository implements Serializable {
 	@Inject
 	private EntityManager manager;
 
+	public TurmaRepository(EntityManager manager) {
+		this.manager = manager;
+	}
+
 	public Turma obterPorID(Integer pkturma) {
 		return manager.find(Turma.class, pkturma);
 	}

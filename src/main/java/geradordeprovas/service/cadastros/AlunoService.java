@@ -6,7 +6,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import geradordeprovas.modelo.Aluno;
+import geradordeprovas.modelo.Sexo;
 import geradordeprovas.repository.AlunoRepository;
+import geradordeprovas.repository.SexoRepository;
 import geradordeprovas.util.Transacional;
 
 public class AlunoService implements Serializable {
@@ -15,6 +17,9 @@ public class AlunoService implements Serializable {
 
 	@Inject
 	protected AlunoRepository alunoRepository;
+
+	@Inject
+	protected SexoRepository sexoRepository;
 
 	@Transacional
 	public void salvar(Aluno aluno) {
@@ -32,6 +37,13 @@ public class AlunoService implements Serializable {
 			return alunoRepository.buscarPorDescricao("nome", nomeAluno);
 		}
 		return alunoRepository.listarTodos();
+	}
+
+	public List<Sexo> listarSexos(String nomeSexo) {
+		if (!nomeSexo.trim().equals("")) {
+			return sexoRepository.buscarPorDescricao("sexo", nomeSexo);
+		}
+		return sexoRepository.listarTodos();
 	}
 
 }

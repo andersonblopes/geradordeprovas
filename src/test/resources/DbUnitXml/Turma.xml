@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+	<tipo_turma pktipoturma="1" tipoturma="A DISTANCIA"
+		codtipoturma="001" />
+	<tipo_turma pktipoturma="2" tipoturma="PRESENCIAL"
+		codtipoturma="002" />
+	<turma pkturma="1" turma="1ª SERIE" codmec="001" maisEducacao="false"
+		horaInicial="07:00" horaFinal="12:00" fktipoturma="1" />
+	<turma pkturma="2" turma="8ª SERIE" codmec="002" maisEducacao="false"
+		horaInicial="13:00" horaFinal="17:30" fktipoturma="2" />
+</dataset>

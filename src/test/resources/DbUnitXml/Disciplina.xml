@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+	<disciplina pkdisciplina="1" disciplina="PORTUGUES" cargahoraria="100" codmec="001" />
+	<disciplina pkdisciplina="2" disciplina="MATEMÁTICA" cargahoraria="100" codmec="002" />
+</dataset>
