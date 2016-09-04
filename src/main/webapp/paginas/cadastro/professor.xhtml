@@ -5,82 +5,94 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-	<ui:define name="titulo">RAPHASCHOOL - Cadastro de professor</ui:define>
+	<ui:define name="titulo">#{msg.ttl_sistema} - Cadastro de professor</ui:define>
 	<ui:define name="corpo">
 		<f:metadata>
-			<f:viewAction action="#{disciplinaBean.iniciar}" />
+			<f:viewAction action="#{professorBean.iniciar}" />
 		</f:metadata>
 		<p:panel header="Cadastro de professor" styleClass="panel-formulario">
-			<h:form id="frm-disciplina">
-				<p:focus for="disciplina" />
-				<p:panelGrid columns="4" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-3, ui-grid-col-2, ui-grid-col-2">
+			<h:form id="frm-professor">
+				<p:focus for="professor" />
+				<p:panelGrid columns="4" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-6, ui-grid-col-2">
 					<p:panelGrid>
 						<p:outputLabel value="Código" for="codigo" />
-						<p:inputText styleClass="somente-leitura" readonly="true" disabled="#{empty disciplinaBean.disciplina}" id="codigo" value="#{disciplinaBean.disciplina.pkdisciplina}"/>
+						<p:inputText styleClass="somente-leitura" readonly="true" disabled="#{empty professorBean.professor}" id="codigo" value="#{professorBean.professor.pkprofessor}"/>
 					</p:panelGrid>
 					<p:panelGrid>
-						<p:outputLabel value="Descrição da disciplina" for="disciplina" />
-						<p:inputText id="disciplina" value="#{disciplinaBean.disciplina.disciplina}" required="true" onkeyup="maiusculo(this)" disabled="#{empty disciplinaBean.disciplina}" />
+						<p:outputLabel value="Nome" for="professor" />
+						<p:inputText id="professor" value="#{professorBean.professor.professor}" required="true" onkeyup="maiusculo(this)" disabled="#{empty professorBean.professor}" />
 					</p:panelGrid>							
 					<p:panelGrid>
-						<p:outputLabel value="Carga horária" for="carga-horaria" />
-						<p:inputText id="carga-horaria" value="#{disciplinaBean.disciplina.cargaHoraria}" required="true"  onkeyup="maiusculo(this)" disabled="#{empty disciplinaBean.disciplina}" />
+						<p:outputLabel value="CPF" for="cpf" />
+						<p:inputMask id="cpf" mask="999.999.999-99" disabled="#{empty professorBean.professor}" value="#{professorBean.professor.cpf}" />
 					</p:panelGrid>
 					<p:panelGrid>
-						<p:outputLabel value="Código MEC" for="codmec" />
-						<p:inputText id="codmec" value="#{disciplinaBean.disciplina.codMec}" required="true" onkeyup="maiusculo(this)" disabled="#{empty disciplinaBean.disciplina}" />
-					</p:panelGrid>	
+							<p:outputLabel value="#{msg.lbl_disciplina}" for="disciplina" />
+							<p:autoComplete id="disciplina" 
+								value="#{professorBean.professor.disciplina}" 
+								title="Selecione a Disciplina"
+								disabled="#{empty professorBean.professor}"
+								required="true"
+								var="d"
+								itemLabel="#{d.disciplina}"
+								itemValue="#{d}"
+								completeMethod="#{professorBean.listarDisciplinas}"
+								minQueryLength="1"
+								maxResults="100"
+								queryDelay="1000"
+								effect="blind"
+								dropdownMode="current"
+								forceSelection="true"
+								scrollHeight="150" />
+						</p:panelGrid>
 				</p:panelGrid>
 				<p:panelGrid columns="3" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-1, ui-grid-col-1">
-					<p:commandButton value="Novo" action="#{disciplinaBean.novo}" rendered="#{empty disciplinaBean.disciplina}" update="frm-disciplina" />
-					<p:commandButton value="Salvar" action="#{disciplinaBean.salvar}" rendered="#{not empty disciplinaBean.disciplina}" update="frm-disciplina frm-localizar" />
-					<p:commandButton value="Excluir" action="#{disciplinaBean.remover}" update="frm-disciplina frm-localizar" process="@this" disabled="#{empty disciplinaBean.disciplina.pkdisciplina}" >
+					<p:commandButton value="Novo" action="#{professorBean.novo}" rendered="#{empty professorBean.professor}" update="frm-professor" />
+					<p:commandButton value="Salvar" action="#{professorBean.salvar}" rendered="#{not empty professorBean.professor}" update="frm-professor frm-localizar" />
+					<p:commandButton value="Excluir" action="#{professorBean.remover}" update="frm-professor frm-localizar" process="@this" disabled="#{empty professorBean.professor.pkprofessor}" >
 						<p:confirm message="Tem certeza que deseja excluir o registro?" />
 					</p:commandButton>
-					<p:commandButton value="Cancelar" action="#{disciplinaBean.limpar}" disabled="#{empty disciplinaBean.disciplina}" update="frm-disciplina" immediate="true" resetValues="true" />
+					<p:commandButton value="Cancelar" action="#{professorBean.limpar}" disabled="#{empty professorBean.professor}" update="frm-professor" immediate="true" resetValues="true" />
 				</p:panelGrid>
 			</h:form>
 			<p:separator />
 			<h:form id="frm-localizar">
 				<p:panelGrid columns="3" layout="grid" id="pnl-pesquisa" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-5, ui-grid-col-1, ui-grid-col-6">
-					<p:inputText id="nome-disciplina" title="Pesquisa pela descrição da disciplina." onkeyup="maiusculo(this)" value="#{disciplinaBean.nomeDisciplina}" placeholder="Descrição da disciplina" />
-					<p:commandButton value="Buscar" action="#{disciplinaBean.pesquisar}" update="frm-localizar" />
+					<p:inputText id="nome-professor" title="Pesquisa pela nome do Professor." onkeyup="maiusculo(this)" value="#{professorBean.nomeProfessor}" placeholder="Nome do Professor" />
+					<p:commandButton value="Buscar" action="#{professorBean.pesquisar}" update="frm-localizar" />
 					<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-noborder" style="float: right;">
-						<p:commandLink title="Exportar para XLS" ajax="false" immediate="true" disabled="#{empty disciplinaBean.disciplinas}" >
+						<p:commandLink title="Exportar para XLS" ajax="false" immediate="true" disabled="#{empty professorBean.professores}" >
 							<h:graphicImage library="img/png" name="xls.png" width="15" />
-							<p:dataExporter type="xls" encoding="#{usuario.encoding}" target="lista-de-disciplinas" fileName="Relação_disciplinas"/>
+							<p:dataExporter type="xls" encoding="#{usuario.encoding}" target="lista-de-professores" fileName="Relação_professores"/>
 						</p:commandLink>
-						<p:commandLink title="Exporat para pdf" ajax="false" immediate="true" disabled="#{empty disciplinaBean.disciplinas}" >
+						<p:commandLink title="Exporat para pdf" ajax="false" immediate="true" disabled="#{empty professorBean.professores}" >
 							<h:graphicImage library="img/png" name="pdf.png" width="15" />
-			   				<p:dataExporter type="pdf" encoding="#{usuario.encoding}" target="lista-de-disciplinas" fileName="Relação_disciplinas" />
+			   				<p:dataExporter type="pdf" encoding="#{usuario.encoding}" target="lista-de-professores" fileName="Relação_disciplinas" />
 						</p:commandLink>
 					</p:panelGrid>
 				</p:panelGrid>
 				<p:dataTable 
-					value="#{disciplinaBean.disciplinas}" 
-					id="lista-de-disciplinas" 
-					var="d" 
+					value="#{professorBean.professores}" 
+					id="lista-de-professores" 
+					var="p" 
 					rows="6"
 					emptyMessage="Nenhum registro satisfaz à pesquisa." 
 					paginator="true" reflow="true" 
 					paginatorAlwaysVisible="false" 
 					paginatorPosition="bottom" 
-					selection="#{disciplinaBean.disciplina}" 
+					selection="#{professorBean.professor}" 
 					selectionMode="single" 
-					rowKey="#{d.pkdisciplina}">
-					<p:ajax event="rowSelect" update="frm-disciplina" />
-		 			<p:ajax event="rowUnselect" update="frm-disciplina" />
+					rowKey="#{p.pkprofessor}">
+					<p:ajax event="rowSelect" update="frm-professor" />
+		 			<p:ajax event="rowUnselect" update="frm-professor" />
 					<p:column headerText="Código" styleClass="coluna-codigo">
-						<p:outputLabel value="#{d.pkdisciplina}" />
+						<p:outputLabel value="#{p.pkprofessor}" />
 					</p:column>
-					<p:column headerText="Disciplina">
-						<p:outputLabel value="#{d.disciplina}" />
+					<p:column headerText="Professor">
+						<p:outputLabel value="#{p.professor}" />
 					</p:column>
-					<p:column headerText="Carga horária" styleClass="coluna-cpf">
-						<p:outputLabel value="#{d.cargaHoraria}" />
-					</p:column>
-					<p:column headerText="Cód MEC" styleClass="coluna-cpf">
-						<p:outputLabel value="#{d.codMec}" />
+					<p:column headerText="CPF" styleClass="coluna-cpf">
+						<p:outputLabel value="#{p.cpf}" />
 					</p:column>						
 				</p:dataTable>
 			</h:form>

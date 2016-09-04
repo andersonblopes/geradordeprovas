@@ -10,20 +10,14 @@
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
 		<properties>
-			<property name="javax.persistence.jdbc.url"
-				value="jdbc:postgresql://192.168.0.200:5432/geradordeprovas" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.0.200:5432/geradordeprovas" />
 			<property name="javax.persistence.jdbc.user" value="postgres" />
 			<property name="javax.persistence.jdbc.password" value="st97ch19" />
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
-
-			<property name="javax.persistence.schema-generation.database.action"
-				value="update" />
-
-			<property name="javax.persistence.schema-generation.create-source"
-				value="metadata" />
-
+			<property name="javax.persistence.schema-generation.database.action" value="update" />
+			<property name="javax.persistence.schema-generation.create-source" value="metadata" />
 			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="true" />
+			<!-- <property name="hibernate.format_sql" value="true" /> -->
 		</properties>
 
 	</persistence-unit>

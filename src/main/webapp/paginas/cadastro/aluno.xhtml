@@ -5,7 +5,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-	<ui:define name="titulo">RAPHASCHOOL - Aluno</ui:define>
+	<ui:define name="titulo">#{msg.ttl_sistema} - Aluno</ui:define>
 	<ui:define name="corpo">
 		<f:metadata>
 			<f:viewAction action="#{alunoBean.iniciar}" />
@@ -107,7 +107,7 @@
 				</p:panelGrid>
 				<p:dataTable 
 					value="#{alunoBean.alunos}" id="lista-pessoas" 
-					var="a" rows="5" paginator="true" reflow="true"
+					var="a" rows="6" paginator="true" reflow="true"
 					paginatorAlwaysVisible="false" paginatorPosition="bottom"
 					emptyMessage="Nenhum registro satisfaz à pesquisa."
 					selection="#{alunoBean.aluno}"

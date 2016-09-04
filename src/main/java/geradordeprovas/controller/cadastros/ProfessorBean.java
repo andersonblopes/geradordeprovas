@@ -10,7 +10,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import geradordeprovas.modelo.Disciplina;
-import geradordeprovas.service.cadastros.DisciplinaService;
+import geradordeprovas.modelo.Professor;
+import geradordeprovas.service.cadastros.ProfessorService;
 
 @Named
 @ViewScoped
@@ -18,33 +19,33 @@ public class ProfessorBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Disciplina disciplina;
+	private Professor professor;
 
-	private String nomeDisciplina;
+	private String nomeProfessor;
 
-	private List<Disciplina> disciplinas;
+	private List<Professor> professores;
 
 	@Inject
-	protected DisciplinaService disciplinaRN;
+	protected ProfessorService professorService;
 
 	public void iniciar() {
-		this.setNomeDisciplina("");
+		this.setNomeProfessor("");
 		pesquisar();
 	}
 
 	public void novo() {
-		this.disciplina = new Disciplina();
+		this.professor = new Professor();
 	}
 
 	public void salvar() {
 		try {
-			disciplinaRN.salvar(this.disciplina);
-			this.disciplina = new Disciplina();
+			professorService.salvar(this.professor);
+			this.professor = new Professor();
 			this.pesquisar();
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro cadastrado com sucesso!", ""));
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-			this.disciplina = null;
+			this.professor = null;
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "não foi possível inserir o registro!", ""));
@@ -54,12 +55,12 @@ public class ProfessorBean implements Serializable {
 
 	public void remover() {
 		try {
-			disciplinaRN.remover(this.disciplina);
+			professorService.remover(this.professor);
 			this.pesquisar();
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro removido com sucesso!", ""));
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-			this.disciplina = null;
+			this.professor = null;
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "não foi possível remover o registro!", ""));
@@ -68,32 +69,36 @@ public class ProfessorBean implements Serializable {
 	}
 
 	public void limpar() {
-		this.disciplina = null;
+		this.professor = null;
 	}
 
 	public void pesquisar() {
-		this.getDisciplinas();
+		this.getProfessores();
 	}
 
-	public Disciplina getDisciplina() {
-		return disciplina;
+	public Professor getProfessor() {
+		return professor;
 	}
 
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
 	}
 
-	public String getNomeDisciplina() {
-		return nomeDisciplina;
+	public String getNomeProfessor() {
+		return nomeProfessor;
 	}
 
-	public void setNomeDisciplina(String nomeDisciplina) {
-		this.nomeDisciplina = nomeDisciplina;
+	public void setNomeProfessor(String nomeProfessor) {
+		this.nomeProfessor = nomeProfessor;
 	}
 
-	public List<Disciplina> getDisciplinas() {
-		this.disciplinas = disciplinaRN.listarTodos(getNomeDisciplina());
-		return disciplinas;
+	public List<Professor> getProfessores() {
+		this.professores = professorService.listarTodos(getNomeProfessor());
+		return professores;
+	}
+
+	public List<Disciplina> listarDisciplinas(String query) {
+		return professorService.listarDisciplinas(query);
 	}
 
 }

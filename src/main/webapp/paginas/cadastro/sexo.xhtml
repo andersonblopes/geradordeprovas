@@ -5,80 +5,78 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-	<ui:define name="titulo">RAPHASCHOOL - Sexo</ui:define>
+	<ui:define name="titulo">#{msg.ttl_sistema} - Sexo</ui:define>
 	<ui:define name="corpo">
 		<f:metadata>
 			<f:viewAction action="#{sexoBean.iniciar}" />
 		</f:metadata>
-		<div class="ui-fluid">
-			<p:panel header="Cadastro de Sexo" styleClass="panel-formulario">
-				<h:form id="frm-sexo">
-					<p:focus for="sexo" />
-					<p:panelGrid columns="3" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-4, ui-grid-col-2">
-						<p:panelGrid>
-							<p:outputLabel value="Código" for="codigo" />
-							<p:inputText id="codigo" value="#{sexoBean.sexo.pksexo}" styleClass="somente-leitura" readonly="true" disabled="#{empty sexoBean.sexo}"/>
-						</p:panelGrid>
-						<p:panelGrid>
-							<p:outputLabel value="Descrição do sexo" for="sexo" />
-							<p:inputText id="sexo" required="true" onblur="maiusculo(this)" disabled="#{empty sexoBean.sexo}" value="#{sexoBean.sexo.sexo}"/>
-						</p:panelGrid>
-						<p:panelGrid>
-							<p:outputLabel value="Cód sexo" for="cod-sexo" />
-							<p:inputText id="cod-sexo" required="true" onkeyup="maiusculo(this)" disabled="#{empty sexoBean.sexo}" value="#{sexoBean.sexo.codsexo}"/>
-						</p:panelGrid>
+		<p:panel header="Cadastro de Sexo" styleClass="panel-formulario">
+			<h:form id="frm-sexo">
+				<p:focus for="sexo" />
+				<p:panelGrid columns="3" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-4, ui-grid-col-2">
+					<p:panelGrid>
+						<p:outputLabel value="Código" for="codigo" />
+						<p:inputText id="codigo" value="#{sexoBean.sexo.pksexo}" styleClass="somente-leitura" readonly="true" disabled="#{empty sexoBean.sexo}"/>
 					</p:panelGrid>
-					<p:panelGrid columns="3" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-1, ui-grid-col-1">
-						<p:commandButton value="Novo" action="#{sexoBean.novo}"	rendered="#{empty sexoBean.sexo}" update="frm-sexo" />
-						<p:commandButton value="Salvar" action="#{sexoBean.salvar}" rendered="#{not empty sexoBean.sexo}" update="frm-sexo frm-localizar" />
-						<p:commandButton value="Excluir" action="#{sexoBean.remover}" update="frm-sexo frm-localizar" process="@this" disabled="#{empty sexoBean.sexo.pksexo}" >
-							<p:confirm icon="ui-icon-alert" message="Tem certeza que deseja excluir o registro?" />
-						</p:commandButton>
-						<p:commandButton value="Cancelar" action="#{sexoBean.limpar}" disabled="#{empty sexoBean.sexo}" update="frm-sexo" immediate="true" resetValues="true" />
+					<p:panelGrid>
+						<p:outputLabel value="Descrição do sexo" for="sexo" />
+						<p:inputText id="sexo" required="true" onblur="maiusculo(this)" disabled="#{empty sexoBean.sexo}" value="#{sexoBean.sexo.sexo}"/>
 					</p:panelGrid>
-				</h:form>
-				<p:separator />
-				<h:form id="frm-localizar">
-					<p:panelGrid columns="3" layout="grid" id="pnl-pesquisa" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-5, ui-grid-col-1,ui-grid-col-6">
-						<p:inputText id="nome-grupo" title="Pesquisa pelo nome do sexo." onkeyup="maiusculo(this)" value="#{sexoBean.nomesexo}" placeholder="Descrição do sexo" />
-						<p:commandButton value="Pesquisar" action="#{sexoBean.pesquisar}" update="frm-localizar" />
-						<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-noborder" style="float: right;">
-							<p:commandLink title="Exportar para XLS" ajax="false" immediate="true" disabled="#{empty sexoBean.sexos}">
-								<h:graphicImage library="img/png" name="xls.png" width="15" />
-								<p:dataExporter type="xls" encoding="#{usuario.encoding}" target="lista-de-sexos" fileName="Relação_sexos"/>
-							</p:commandLink>
-							<p:commandLink title="Exporat para pdf" ajax="false" immediate="true" disabled="#{empty sexoBean.sexos}">
-								<h:graphicImage library="img/png" name="pdf.png" width="15" />
-				   				<p:dataExporter type="pdf" encoding="#{usuario.encoding}" target="lista-de-sexos" fileName="Relação_sexos" />
-							</p:commandLink>
-						</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Cód sexo" for="cod-sexo" />
+						<p:inputText id="cod-sexo" required="true" onkeyup="maiusculo(this)" disabled="#{empty sexoBean.sexo}" value="#{sexoBean.sexo.codsexo}"/>
 					</p:panelGrid>
-					<p:dataTable 
-						value="#{sexoBean.sexos}" 
-						id="lista-de-sexos" 
-						var="s" 
-						rows="5"
-						emptyMessage="Nenhum registro satisfaz à pesquisa." 
-						paginator="true" reflow="true" 
-						paginatorAlwaysVisible="false" 
-						paginatorPosition="bottom" 
-						selection="#{sexoBean.sexo}" 
-						selectionMode="single" 
-						rowKey="#{s.pksexo}">
-						<p:ajax event="rowSelect" update="frm-sexo" />
-			 			<p:ajax event="rowUnselect" update="frm-sexo" />
-						<p:column headerText="Código" styleClass="coluna-codigo">
-							<p:outputLabel value="#{s.pksexo}" />
-						</p:column>
-						<p:column headerText="Sexo">
-							<p:outputLabel value="#{s.sexo}" />
-						</p:column>
-						<p:column headerText="CódSexo" styleClass="coluna-cnpj">
-							<p:outputLabel value="#{s.codsexo}" />
-						</p:column>
-					</p:dataTable>
-				</h:form>
-			</p:panel>
-		</div>
+				</p:panelGrid>
+				<p:panelGrid columns="3" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-1, ui-grid-col-1">
+					<p:commandButton value="#{msg.btn_incluir}" action="#{sexoBean.novo}"	rendered="#{empty sexoBean.sexo}" update="frm-sexo" />
+					<p:commandButton value="#{msg.btn_salvar}" action="#{sexoBean.salvar}" rendered="#{not empty sexoBean.sexo}" update="frm-sexo frm-localizar" />
+					<p:commandButton value="#{msg.btn_excluir}" action="#{sexoBean.remover}" update="frm-sexo frm-localizar" process="@this" disabled="#{empty sexoBean.sexo.pksexo}" >
+						<p:confirm icon="ui-icon-alert" message="Tem certeza que deseja excluir o registro?" />
+					</p:commandButton>
+					<p:commandButton value="#{msg.btn_cancelar}" action="#{sexoBean.limpar}" disabled="#{empty sexoBean.sexo}" update="frm-sexo" immediate="true" resetValues="true" />
+				</p:panelGrid>
+			</h:form>
+			<p:separator />
+			<h:form id="frm-localizar">
+				<p:panelGrid columns="3" layout="grid" id="pnl-pesquisa" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-5, ui-grid-col-1,ui-grid-col-6">
+					<p:inputText id="nome-grupo" title="#{msg.plh_pesq_texto}" onkeyup="maiusculo(this)" value="#{sexoBean.nomesexo}" placeholder="#{msg.plh_pesq_texto}" />
+					<p:commandButton value="#{msg.btn_pesquisar}" action="#{sexoBean.pesquisar}" update="frm-localizar" />
+					<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-noborder" style="float: right;">
+						<p:commandLink title="Exportar para XLS" ajax="false" immediate="true" disabled="#{empty sexoBean.sexos}">
+							<h:graphicImage library="img/png" name="xls.png" width="15" />
+							<p:dataExporter type="xls" encoding="#{usuario.encoding}" target="lista-de-sexos" fileName="Relação_sexos"/>
+						</p:commandLink>
+						<p:commandLink title="Exporat para pdf" ajax="false" immediate="true" disabled="#{empty sexoBean.sexos}">
+							<h:graphicImage library="img/png" name="pdf.png" width="15" />
+			   				<p:dataExporter type="pdf" encoding="#{usuario.encoding}" target="lista-de-sexos" fileName="Relação_sexos" />
+						</p:commandLink>
+					</p:panelGrid>
+				</p:panelGrid>
+				<p:dataTable 
+					value="#{sexoBean.sexos}" 
+					id="lista-de-sexos" 
+					var="s" 
+					rows="8"
+					emptyMessage="Nenhum registro satisfaz à pesquisa." 
+					paginator="true" reflow="true" 
+					paginatorAlwaysVisible="false" 
+					paginatorPosition="bottom" 
+					selection="#{sexoBean.sexo}" 
+					selectionMode="single" 
+					rowKey="#{s.pksexo}">
+					<p:ajax event="rowSelect" update="frm-sexo" />
+		 			<p:ajax event="rowUnselect" update="frm-sexo" />
+					<p:column headerText="Código" styleClass="coluna-codigo">
+						<p:outputLabel value="#{s.pksexo}" />
+					</p:column>
+					<p:column headerText="Sexo">
+						<p:outputLabel value="#{s.sexo}" />
+					</p:column>
+					<p:column headerText="CódSexo" styleClass="coluna-cnpj">
+						<p:outputLabel value="#{s.codsexo}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
 	</ui:define>
 </ui:composition>

@@ -15,6 +15,10 @@ public class TipoTurmaRepository implements Serializable {
 	@Inject
 	private EntityManager manager;
 
+	public TipoTurmaRepository() {
+
+	}
+
 	public TipoTurma obterPorID(Integer pktipoturma) {
 		return manager.find(TipoTurma.class, pktipoturma);
 	}
@@ -42,4 +46,3 @@ public class TipoTurmaRepository implements Serializable {
 	}
 
 }
-

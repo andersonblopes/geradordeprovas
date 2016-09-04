@@ -5,7 +5,11 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ DisciplinaRepositoryTest.class, TurmaRepositoryTest.class })
+@SuiteClasses({ 
+	DisciplinaRepositoryTest.class,
+	TurmaRepositoryTest.class,
+	AutenticacaoTest.class
+	})
 public class AllTests {
 
 }

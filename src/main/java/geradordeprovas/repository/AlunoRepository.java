@@ -15,6 +15,10 @@ public class AlunoRepository implements Serializable {
 	@Inject
 	private EntityManager manager;
 
+	public AlunoRepository() {
+
+	}
+
 	public Aluno obterPorID(Integer id) {
 		return manager.find(Aluno.class, id);
 	}

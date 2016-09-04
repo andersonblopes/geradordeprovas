@@ -15,6 +15,10 @@ public class TurmaRepository implements Serializable {
 	@Inject
 	private EntityManager manager;
 
+	public TurmaRepository() {
+
+	}
+
 	public TurmaRepository(EntityManager manager) {
 		this.manager = manager;
 	}

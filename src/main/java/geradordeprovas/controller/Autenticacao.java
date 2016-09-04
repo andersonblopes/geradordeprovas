@@ -1,6 +1,7 @@
 package geradordeprovas.controller;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -16,16 +17,16 @@ public class Autenticacao implements Serializable {
 
 	private String usuario;
 	private String senha;
-	private String locale = "pt";
+	private static final String locale = Locale.getDefault().toString();
 	private String encoding = "iso-8859-1";
 	private String timeZone = "America/Fortaleza";
 
 	public String autenticar() {
-		if (this.getUsuario().equals("ALUNO") && this.getSenha().equals("aluno")) {
+		if (this.getUsuario().trim().equals("ALUNO") && this.getSenha().equals("aluno")) {
 			return "/paginas/principal?faces-redirect=true";
-		} else if (this.getUsuario().equals("PROFESSOR") && this.getSenha().equals("professor")) {
+		} else if (this.getUsuario().trim().equals("PROFESSOR") && this.getSenha().equals("professor")) {
 			return "/paginas/principal?faces-redirect=true";
-		} else if (this.getUsuario().equals("ADMIN") && this.getSenha().equals("admin")) {
+		} else if (this.getUsuario().trim().equals("ADMIN") && this.getSenha().equals("admin")) {
 			return "/paginas/principal?faces-redirect=true";
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null,

@@ -7,24 +7,27 @@
 	<h:head>
 		<meta charset="UTF-8" />
 		<title>
-			<ui:insert name="titulo">RAPHASCHOOL</ui:insert>
+			<ui:insert name="titulo">SYSEDU</ui:insert>
 		</title>
 		<h:outputStylesheet library="css" name="estilo.css" />
 		<h:outputScript library="js" name="app.js"/>
+		<h:outputScript library="js/highchart" name="exporting.js"/>
+		<h:outputScript library="js/highchart" name="highcharts-3d.js"/>
+		<h:outputScript library="js/highchart" name="highcharts.js"/>
 	</h:head>
 	<h:body>
 	<p:growl life="5000" autoUpdate="true" />
 	<p:ajaxStatus onstart="PF('status').show();"  onsuccess="PF('status').hide()" />
 	<p:dialog widgetVar="status" closable="false" resizable="false" >
-		Por favor aguarde ...
+		#{msg.load_aguarde}
 	</p:dialog>
 	<div class="ui-fluid ui-grid-responsive">
 		<h:form>
 			<p:panelGrid columns="1" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-12">
 				<p:menubar style="padding: 0px;">
 					<p:menuitem value="HOME"  outcome="/paginas/principal" />
-					<p:submenu style="float: right;" label="Olá #{autenticacao.usuario}!">
-						<p:menuitem value="Logout" action="#{autenticacao.encerrarSessao}" title="Sair do sistema!" />
+					<p:submenu style="float: right;" label="#{msg.lbl_user} #{autenticacao.usuario}!">
+						<p:menuitem value="Logout" action="#{autenticacao.encerrarSessao}" title="#{msg.title_sair_do_sistema}" />
 					</p:submenu>
 				</p:menubar>
 			</p:panelGrid>
@@ -34,26 +37,26 @@
 				<h:form>
 					<p:panelGrid>
 						 <p:menu toggleable="true" overlay="false" trigger="false" style="padding: 5px;">					        
-							<p:submenu label="Cadastros">
-								<p:menuitem value="Aluno" outcome="/paginas/cadastro/aluno" />
-								<p:menuitem value="Disciplina" outcome="/paginas/cadastro/disciplina"/>
-								<p:menuitem value="Professor" outcome="/paginas/cadastro/professor" />
-								<p:menuitem value="Quatões" outcome="/paginas/cadastro/questao" />
-								<p:menuitem value="Sexo" outcome="/paginas/cadastro/sexo" />
-								<p:menuitem value="Tipo de turma" outcome="/paginas/cadastro/tipoTurma" />
-								<p:menuitem value="Turma" outcome="/paginas/cadastro/turma" />
+							<p:submenu label="#{msg.menu_cadastros}">
+								<p:menuitem value="#{msg.menu_aluno}" outcome="/paginas/cadastro/aluno" />
+								<p:menuitem value="#{msg.menu_disciplina}" outcome="/paginas/cadastro/disciplina"/>
+								<p:menuitem value="#{msg.menu_professor}" outcome="/paginas/cadastro/professor" />
+								<p:menuitem value="#{msg.menu_questao}" outcome="/paginas/cadastro/questao" />
+								<p:menuitem value="#{msg.menu_sexo}" outcome="/paginas/cadastro/sexo" />
+								<p:menuitem value="#{msg.menu_tipo_turma}" outcome="/paginas/cadastro/tipoTurma" />
+								<p:menuitem value="#{msg.menu_turma}" outcome="/paginas/cadastro/turma" />
 							</p:submenu>
-							<p:submenu label="Aluno">
-								<p:menuitem value="Avaliação"/>									
+							<p:submenu label="#{msg.menu_aluno}">
+								<p:menuitem value="#{msg.menu_avaliacao}"/>									
 							</p:submenu>
-							<p:submenu label="Acadêmico">
-								<p:menuitem value="Matrícula" />
-								<p:menuitem value="Notas/faltas"/>								
+							<p:submenu label="#{msg.menu_academico}">
+								<p:menuitem value="#{msg.menu_matricula}" />
+								<p:menuitem value="#{msg.menu_notas_faltas}"/>								
 							</p:submenu>
-							<p:submenu label="Documentos">
-								<p:menuitem value="Histórico"/>
-								<p:menuitem value="Declarações"/>
-								<p:menuitem value="Relatórios"/>
+							<p:submenu label="#{msg.menu_documentos}">
+								<p:menuitem value="#{msg.menu_historico}"/>
+								<p:menuitem value="#{msg.menu_declaracoes}"/>
+								<p:menuitem value="#{msg.menu_relatorios}"/>
 							</p:submenu>				        
 					    </p:menu>	
 					</p:panelGrid>		
@@ -66,7 +69,7 @@
 		<ui:insert name="rodape">
 				<hr />
 				<div class="rodape" align="center">
-					Todos os direitos reservados - 2016
+					#{msg.rodape_msg} - 2016
 				</div>
 		</ui:insert>
 	</div>
@@ -112,6 +115,7 @@
 				allDayText : 'Todo o Dia'
 			};
 			onkeydown="if(event.keyCode==13) event.keyCode=9;";
+			
 		</script>
 	</h:body>
 </html>

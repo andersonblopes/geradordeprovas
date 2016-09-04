@@ -13,6 +13,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 @Table(name = "professor")
@@ -29,6 +30,11 @@ public class Professor implements Serializable {
 	@NotEmpty
 	@Column(columnDefinition = "text")
 	private String professor;
+
+	@NotEmpty
+	@CPF
+	@Column(columnDefinition = "text")
+	private String cpf;
 
 	@ManyToOne
 	@JoinColumn(name = "fkdisciplina", referencedColumnName = "pkdisciplina")
@@ -48,6 +54,14 @@ public class Professor implements Serializable {
 
 	public void setProfessor(String professor) {
 		this.professor = professor;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public Disciplina getDisciplina() {

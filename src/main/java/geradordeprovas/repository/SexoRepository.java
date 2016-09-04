@@ -15,6 +15,10 @@ public class SexoRepository implements Serializable {
 	@Inject
 	private EntityManager manager;
 
+	public SexoRepository() {
+
+	}
+
 	public Sexo obterPorID(Integer pksexo) {
 		return manager.find(Sexo.class, pksexo);
 	}

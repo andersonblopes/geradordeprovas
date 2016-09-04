@@ -5,26 +5,26 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	<h:head>
-		<title>RAPHASCHOOL - Acesso ao sistema</title>
+		<title>#{msg.ttl_sistema} - #{msg.title_acessar_o_sistema}</title>
 		<h:outputStylesheet library="css" name="estilo.css" />
 	</h:head>
 	<h:body>
 		<p:ajaxStatus onstart="PF('status').show();"  onsuccess="PF('status').hide()" />
 		<p:dialog widgetVar="status" closable="false" resizable="false" >
-			Por favor aguarde ...
+			#{msg.load_aguarde}
 		</p:dialog>
 		<p:growl autoUpdate="true"/>
 		<h:form id="frm-login">
 			<p:focus for="login"/>
-			<p:panel styleClass="ui-fluid container" header="RAPHASCHOOL - Acesso ao sistema" style="margin-top: 5%; width: 275px;">
+			<p:panel styleClass="ui-fluid container" header="#{msg.ttl_sistema} - #{msg.msg_acesso_login}" style="margin-top: 5%; width: 275px;">
 				<p:panelGrid columns="1" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-12">
-					<p:outputLabel value="Login" for="login" />
-					<p:inputText title="Usuário" placeholder="Digite seu login" id="login" required="true" value="#{autenticacao.usuario}" />
-					<p:outputLabel value="Senha" for="senha" />
-					<p:password placeholder="Digite sua senha" title="Senha" id="senha" required="true" value="#{autenticacao.senha}" />
+					<p:outputLabel value="#{msg.lbl_login}" for="login" />
+					<p:inputText title="Usuário" placeholder="#{msg.plh_login}" id="login" required="true" value="#{autenticacao.usuario}" />
+					<p:outputLabel value="#{msg.lbl_senha}" for="senha" />
+					<p:password placeholder="#{msg.plh_senha}" title="Senha" id="senha" required="true" value="#{autenticacao.senha}" />
 					<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-5, ui-grid-col-7">
-						<p:commandButton value="Acessar" title="Acessar" action="#{autenticacao.autenticar}"/>
-						<p:link value="Esqueceu a senha?" title="Recuperar senha!" disabled="true"/>
+						<p:commandButton value="#{msg.btn_acessar}" title="#{msg.title_acessar_o_sistema}" action="#{autenticacao.autenticar}"/>
+						<p:link value="#{msg.lbl_esqueceu_senha}" title="#{msg.title_recuperar_senha}!" disabled="true"/>
 					</p:panelGrid>
 				</p:panelGrid>
 			</p:panel>
