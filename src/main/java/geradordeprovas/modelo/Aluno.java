@@ -43,10 +43,6 @@ public class Aluno implements Serializable {
 	@Column(columnDefinition = "text", unique = true)
 	private String cpf;
 
-	@ManyToOne
-	@JoinColumn(name = "fksexo", nullable = false, referencedColumnName = "pksexo")
-	private Sexo sexo;
-
 	@NotEmpty
 	@Column(columnDefinition = "text")
 	private String matricula;
@@ -65,6 +61,9 @@ public class Aluno implements Serializable {
 	@NotEmpty
 	@Column(columnDefinition = "text")
 	private String telefoneResponsavel;
+
+	@Column(nullable = false)
+	private char sexo;
 
 	public Long getId() {
 		return id;
@@ -98,11 +97,11 @@ public class Aluno implements Serializable {
 		this.datanascimento = datanascimento;
 	}
 
-	public Sexo getSexo() {
+	public char getSexo() {
 		return this.sexo;
 	}
 
-	public void setSexo(Sexo sexo) {
+	public void setSexo(char sexo) {
 		this.sexo = sexo;
 	}
 

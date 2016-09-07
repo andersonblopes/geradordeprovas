@@ -9,7 +9,7 @@ CREATE TABLE public.turma (
   CONSTRAINT pkturma PRIMARY KEY(pkturma),
   CONSTRAINT fktipoturma FOREIGN KEY (fktipoturma)
     REFERENCES public.tipo_turma(pktipoturma)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
     NOT DEFERRABLE
 );

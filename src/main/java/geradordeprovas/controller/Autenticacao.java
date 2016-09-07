@@ -17,7 +17,7 @@ public class Autenticacao implements Serializable {
 
 	private String usuario;
 	private String senha;
-	private static final String locale = Locale.getDefault().toString();
+	private String locale = "pt";
 	private String encoding = "iso-8859-1";
 	private String timeZone = "America/Fortaleza";
 

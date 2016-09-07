@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import geradordeprovas.modelo.Aluno;
-import geradordeprovas.modelo.Sexo;
 import geradordeprovas.service.cadastros.AlunoService;
 import geradordeprovas.util.FacesUtils;
 
@@ -69,10 +68,6 @@ public class AlunoBean implements Serializable {
 
 	public void pesquisar() {
 		this.getAlunos();
-	}
-
-	public List<Sexo> listarSexos(String query) {
-		return alunoService.listarSexos(query);
 	}
 
 	public String getNomePessoa() {

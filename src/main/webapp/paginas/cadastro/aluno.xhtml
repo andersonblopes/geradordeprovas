@@ -16,7 +16,7 @@
 				<p:panelGrid columns="5" 
 					layout="grid"
 					styleClass="panelgrid-noborder"  
-					columnClasses="ui-grid-col-1, ui-grid-col-2, ui-grid-col-6, ui-grid-col-1, ui-grid-col-2">
+					columnClasses="ui-grid-col-1, ui-grid-col-2, ui-grid-col-5, ui-grid-col-2, ui-grid-col-2">
 					<p:panelGrid>
 						<p:outputLabel value="Código" for="codigo" />
 						<p:inputText styleClass="somente-leitura" readonly="true" id="codigo" disabled="#{empty alunoBean.aluno}" value="#{alunoBean.aluno.id}" />
@@ -38,22 +38,10 @@
 					</p:panelGrid>
 					<p:panelGrid>
 						<p:outputLabel value="Sexo" for="sexo" />
-						<p:autoComplete id="sexo"
-							value="#{alunoBean.aluno.sexo}"
-							title="Selecione o sexo do aluno."
-							disabled="#{empty alunoBean.aluno}"
-							required="true"
-							var="sexo"
-							itemLabel="#{sexo.sexo}" 
-							itemValue="#{sexo}"
-							completeMethod="#{alunoBean.listarSexos}"
-							minQueryLength="1"
-							maxResults="100"
-							queryDelay="1000"
-							effect="blind"
-							dropdownMode="current"
-							forceSelection="true"
-							scrollHeight="150"/>
+						<p:selectOneRadio id="sexo" value="#{alunoBean.aluno.sexo}" disabled="#{empty alunoBean.aluno}" title="Selecione o sexo do aluno." required="true">
+							<f:selectItem itemLabel="Masculino" itemValue='M'/>
+							<f:selectItem itemLabel="Feminino" itemValue='F'/>
+						</p:selectOneRadio>
 					</p:panelGrid>
 				</p:panelGrid>
 				<p:panelGrid columns="4"

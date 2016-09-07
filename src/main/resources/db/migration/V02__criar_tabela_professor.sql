@@ -6,7 +6,7 @@ CREATE TABLE public.professor (
   CONSTRAINT pkprofessor PRIMARY KEY(pkprofessor),
   CONSTRAINT fkdisciplina FOREIGN KEY (fkdisciplina)
     REFERENCES public.disciplina(pkdisciplina)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
     NOT DEFERRABLE
 );
