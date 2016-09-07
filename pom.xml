@@ -12,6 +12,13 @@
 
 	<dependencies>
 
+		<!-- Controle de arquivos sql -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>4.0.3</version>
+		</dependency>
+
 		<!-- Gerar arquivo XLS -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
