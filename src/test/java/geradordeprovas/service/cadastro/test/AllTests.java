@@ -4,8 +4,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import geradordeprovas.util.App;
+
 @RunWith(Suite.class)
 @SuiteClasses({ 
+	App.class,
 	DisciplinaRepositoryTest.class,
 	TurmaRepositoryTest.class,
 	AutenticacaoTest.class

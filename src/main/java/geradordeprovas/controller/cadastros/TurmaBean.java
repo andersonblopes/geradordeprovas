@@ -100,10 +100,9 @@ public class TurmaBean implements Serializable {
 		this.turmas = turmaRN.listarTodos(getNomeTurma());
 		return turmas;
 	}
-	
-	public List<TipoTurma> listarTiposTurma(String query){
+
+	public List<TipoTurma> listarTiposTurma(String query) {
 		return turmaRN.listarTiposTurma(query);
 	}
 
 }
-

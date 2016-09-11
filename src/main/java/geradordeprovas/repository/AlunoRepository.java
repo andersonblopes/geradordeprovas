@@ -23,16 +23,9 @@ public class AlunoRepository implements Serializable {
 		return manager.find(Aluno.class, id);
 	}
 
-	public Aluno guardar(Aluno entity) {
-		return manager.merge(entity);
-	}
-
-	public void remover(Aluno entity) {
-		manager.remove(manager.getReference(Aluno.class, entity.getId()));
-	}
-
 	public List<Aluno> listarTodos() {
-		return manager.createQuery("from Aluno order by id desc", Aluno.class).getResultList();
+		return manager.createQuery("from Aluno a left join fetch a.turma order by a.id desc", Aluno.class)
+				.getResultList();
 	}
 
 	public List<Aluno> buscarPorDescricao(String campo, String value) {

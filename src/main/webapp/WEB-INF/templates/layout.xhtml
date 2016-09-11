@@ -36,12 +36,14 @@
 			<ui:insert name="cabecalho">
 				<h:form>
 					<p:panelGrid>
-						 <p:menu toggleable="true" overlay="false" trigger="false" style="padding: 5px;">					        
+						 <p:menu toggleable="true">	
 							<p:submenu label="#{msg.menu_cadastros}">
 								<p:menuitem value="#{msg.menu_aluno}" outcome="/paginas/cadastro/aluno" />
+								<p:menuitem value="#{msg.menu_conteudo}" outcome="/paginas/cadastro/conteudo" />
 								<p:menuitem value="#{msg.menu_disciplina}" outcome="/paginas/cadastro/disciplina"/>
+								<p:menuitem value="#{msg.menu_periodo_letivo}" outcome="/paginas/cadastro/periodoletivo" />
 								<p:menuitem value="#{msg.menu_professor}" outcome="/paginas/cadastro/professor" />
-								<p:menuitem value="#{msg.menu_questao}" />
+								<p:menuitem value="#{msg.menu_questao}" outcome="/paginas/cadastro/questao" />
 								<p:menuitem value="#{msg.menu_sexo}" rendered="false" outcome="/paginas/cadastro/sexo" />
 								<p:menuitem value="#{msg.menu_tipo_turma}" outcome="/paginas/cadastro/tipoTurma" />
 								<p:menuitem value="#{msg.menu_turma}" outcome="/paginas/cadastro/turma" />
@@ -57,7 +59,7 @@
 								<p:menuitem value="#{msg.menu_historico}"/>
 								<p:menuitem value="#{msg.menu_declaracoes}"/>
 								<p:menuitem value="#{msg.menu_relatorios}"/>
-							</p:submenu>				        
+							</p:submenu>	
 					    </p:menu>	
 					</p:panelGrid>		
 				</h:form>			
@@ -84,7 +86,7 @@
 	</h:form>
 	
 	<script>
-			PrimeFaces.locales['pt'] = {
+			PrimeFaces.locales['pt_BR'] = {
 				closeText : 'Fechar',
 				prevText : 'Anterior',
 				nextText : 'Próximo',

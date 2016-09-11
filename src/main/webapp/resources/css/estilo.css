@@ -24,7 +24,7 @@ a {
 	font-weight: bold;
 }
 
-.graficos{
+.graficos {
 	font-size: 13px;
 }
 
@@ -327,4 +327,11 @@ body {
 	.linha:last-child .coluna:last-child {
 		margin-bottom: 0;
 	}
+}
+
+.service-pages {
+	background-color: #FAF0E6;
+	font-size: 16px;
+	height: 200px;
+	padding-left: 20px;
 }

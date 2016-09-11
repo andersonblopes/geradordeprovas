@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import geradordeprovas.modelo.Disciplina;
 import geradordeprovas.modelo.Professor;
+import geradordeprovas.modelo.dao.GeralDAO;
 import geradordeprovas.repository.DisciplinaRepository;
 import geradordeprovas.repository.ProfessorRepository;
 import geradordeprovas.util.Transacional;
@@ -21,14 +22,17 @@ public class ProfessorService implements Serializable {
 	@Inject
 	protected DisciplinaRepository disciplinaRepository;
 
+	@Inject
+	protected GeralDAO<Professor> dao;
+
 	@Transacional
 	public void salvar(Professor professor) {
-		professorRepository.guardar(professor);
+		dao.salvar(professor);
 	}
 
 	@Transacional
 	public void remover(Professor Professor) {
-		professorRepository.remover(Professor);
+		dao.remover(Professor);
 	}
 
 	@Transacional

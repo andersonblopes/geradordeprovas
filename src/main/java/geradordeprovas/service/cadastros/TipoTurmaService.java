@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import geradordeprovas.modelo.TipoTurma;
+import geradordeprovas.modelo.dao.GeralDAO;
 import geradordeprovas.repository.TipoTurmaRepository;
 import geradordeprovas.util.Transacional;
 
@@ -16,14 +17,17 @@ public class TipoTurmaService implements Serializable {
 	@Inject
 	private TipoTurmaRepository tipoTurmaRepository;
 
+	@Inject
+	protected GeralDAO<TipoTurma> dao;
+
 	@Transacional
 	public void salvar(TipoTurma tipoTurma) {
-		tipoTurmaRepository.guardar(tipoTurma);
+		dao.salvar(tipoTurma);
 	}
 
 	@Transacional
 	public void remover(TipoTurma tipoTurma) {
-		tipoTurmaRepository.remover(tipoTurma);
+		dao.remover(tipoTurma);
 	}
 
 	@Transacional

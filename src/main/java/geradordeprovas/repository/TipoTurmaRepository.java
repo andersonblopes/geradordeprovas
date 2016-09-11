@@ -23,14 +23,6 @@ public class TipoTurmaRepository implements Serializable {
 		return manager.find(TipoTurma.class, pktipoturma);
 	}
 
-	public TipoTurma guardar(TipoTurma entity) {
-		return manager.merge(entity);
-	}
-
-	public void remover(TipoTurma entity) {
-		manager.remove(manager.getReference(TipoTurma.class, entity.getPktipoturma()));
-	}
-
 	public List<TipoTurma> listarTodos() {
 		return manager.createQuery("from TipoTurma order by tipoturma", TipoTurma.class).getResultList();
 	}

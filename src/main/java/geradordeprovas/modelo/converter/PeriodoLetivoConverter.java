@@ -6,28 +6,28 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
-import geradordeprovas.modelo.Turma;
-import geradordeprovas.repository.TurmaRepository;
+import geradordeprovas.modelo.PeriodoLetivo;
+import geradordeprovas.repository.PeriodoLetivoRepository;
 
-@FacesConverter(forClass = Turma.class)
-public class TurmaConverter implements Converter {
+@FacesConverter(forClass = PeriodoLetivo.class)
+public class PeriodoLetivoConverter implements Converter {
 
 	@Inject
-	private TurmaRepository turmaRepository;
+	protected PeriodoLetivoRepository anoLetivoRepository;
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value != null && !value.equals("")) {
-			return turmaRepository.obterPorID(Integer.valueOf(value));
+			return anoLetivoRepository.obterPorID(Integer.valueOf(value));
 		}
 		return null;
 	}
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		if (value instanceof Turma) {
-			Turma turma = (Turma) value;
-			return String.valueOf(turma.getPkturma());
+		if (value instanceof PeriodoLetivo) {
+			PeriodoLetivo anoLetivo = (PeriodoLetivo) value;
+			return String.valueOf(anoLetivo.getId());
 		}
 		return "";
 	}

@@ -1,27 +1,31 @@
 package geradordeprovas.util;
 
 import org.flywaydb.core.Flyway;
+import org.junit.Test;
 
 public class App {
 
-	public static void main(String[] args) {
+	@Test
+	public void limpaAmbiente() {
 		Flyway flyway = new Flyway();
 
-		flyway.setDataSource("jdbc:postgresql://192.168.0.200:5432/geradordeprovas", "postgres", "st97ch19");
+		// flyway.setDataSource("jdbc:postgresql://192.168.0.200:5432/geradordeprovas",
+		// "postgres", "st97ch19");
+		flyway.setDataSource("jdbc:postgresql://192.168.0.200:5432/geradordeprovasTEST", "postgres", "st97ch19");
 		// System.out.println(flyway.getDataSource());
 
 		/* Limpa base de dados */
-		 flyway.clean();
+		flyway.clean();
 
 		/* Executa migrations pendentes */
-		 flyway.migrate();
+		// flyway.migrate();
 
 		/* Valida migrations na base de dados */
-		 flyway.validate();
+		// flyway.validate();
 
 		/* Gera o schema para controle de versões */
 		// flyway.baseline();
-		
+
 	}
 
 }

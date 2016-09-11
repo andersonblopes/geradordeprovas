@@ -14,6 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import geradordeprovas.modelo.Turma;
+import geradordeprovas.modelo.dao.GeralDAO;
 import geradordeprovas.repository.TurmaRepository;
 import geradordeprovas.test.util.DbUnitHelper;
 
@@ -24,6 +25,7 @@ public class TurmaRepositoryTest {
 
 	private EntityManager manager;
 	private TurmaRepository repository;
+	private GeralDAO<Turma> dao;
 
 	@BeforeClass
 	public static void initClass() {
@@ -39,6 +41,7 @@ public class TurmaRepositoryTest {
 
 		manager = factory.createEntityManager();
 		this.repository = new TurmaRepository(manager);
+		this.dao = new GeralDAO<Turma>(manager);
 	}
 
 	@After
@@ -67,7 +70,7 @@ public class TurmaRepositoryTest {
 		serie1.setHoraFinal("12:30");
 		serie1.setMaisEducacao(true);
 		serie1.setTurma("!ª SÉRIE");
-		repository.guardar(serie1);
+		dao.salvar(serie1);
 
 		Assert.assertEquals("resultado", 0, repository.buscarPorDescricao("codmec", "004").size());
 	}

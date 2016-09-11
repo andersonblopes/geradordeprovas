@@ -28,14 +28,6 @@ public class DisciplinaRepository implements Serializable {
 		return manager.find(Disciplina.class, pk);
 	}
 
-	public Disciplina guardar(Disciplina entity) {
-		return manager.merge(entity);
-	}
-
-	public void remover(Disciplina entity) {
-		manager.remove(manager.getReference(Disciplina.class, entity.getPkdisciplina()));
-	}
-
 	public List<Disciplina> listarTodos() {
 		return manager.createQuery("from Disciplina order by pkdisciplina desc", Disciplina.class).getResultList();
 	}

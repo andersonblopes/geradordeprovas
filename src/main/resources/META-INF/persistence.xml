@@ -5,8 +5,15 @@
 	<persistence-unit name="LMSPU">
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>geradordeprovas.modelo.Aluno</class>
+		<class>geradordeprovas.modelo.Conteudo</class>
 		<class>geradordeprovas.modelo.Disciplina</class>
+		<class>geradordeprovas.modelo.ItemQuestao</class>
+		<class>geradordeprovas.modelo.PeriodoLetivo</class>
 		<class>geradordeprovas.modelo.Professor</class>
+		<class>geradordeprovas.modelo.Questao</class>
+		<class>geradordeprovas.modelo.TipoTurma</class>
+		<class>geradordeprovas.modelo.Turma</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
 		<properties>
@@ -14,8 +21,8 @@
 			<property name="javax.persistence.jdbc.user" value="postgres" />
 			<property name="javax.persistence.jdbc.password" value="st97ch19" />
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
-<!-- 			<property name="javax.persistence.schema-generation.database.action" value="update" />
-			<property name="javax.persistence.schema-generation.create-source" value="metadata" /> -->
+ 			<property name="javax.persistence.schema-generation.database.action" value="update" />
+			<property name="javax.persistence.schema-generation.create-source" value="metadata" />
 			<property name="hibernate.show_sql" value="true" />
 			<!-- <property name="hibernate.format_sql" value="true" /> -->
 		</properties>

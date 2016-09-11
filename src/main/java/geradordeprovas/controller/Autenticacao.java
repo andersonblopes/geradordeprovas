@@ -1,7 +1,6 @@
 package geradordeprovas.controller;
 
 import java.io.Serializable;
-import java.util.Locale;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -17,7 +16,7 @@ public class Autenticacao implements Serializable {
 
 	private String usuario;
 	private String senha;
-	private String locale = "pt";
+	private String locale = "pt_BR";
 	private String encoding = "iso-8859-1";
 	private String timeZone = "America/Fortaleza";
 

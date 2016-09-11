@@ -9,14 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "turma")
-@NamedQuery(name = "Turma.findAll", query = "SELECT t FROM Turma t")
 public class Turma implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -44,7 +42,7 @@ public class Turma implements Serializable {
 	private boolean maisEducacao;
 
 	@ManyToOne
-	@JoinColumn(name = "fktipoturma")
+	@JoinColumn
 	private TipoTurma tipoturma;
 
 	public Integer getPkturma() {
@@ -129,4 +127,3 @@ public class Turma implements Serializable {
 	}
 
 }
-

@@ -12,54 +12,43 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
-@Table(name = "professor")
-public class Professor implements Serializable {
+@Table(name = "conteudo")
+public class Conteudo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(unique = true, nullable = false)
-	private Integer pkprofessor;
+	private Long id;
 
 	@NotEmpty
 	@Column(columnDefinition = "text")
-	private String professor;
-
-	@NotEmpty
-	@CPF
-	@Column(columnDefinition = "text")
-	private String cpf;
+	private String conteudo;
 
 	@ManyToOne
-	@JoinColumn(name = "fkdisciplina", referencedColumnName = "pkdisciplina")
+	@JoinColumn(name = "fkdisciplina")
 	private Disciplina disciplina;
 
-	public Integer getPkprofessor() {
-		return pkprofessor;
+	@ManyToOne
+	@JoinColumn(name = "fkperiodoletivo")
+	private PeriodoLetivo periodoLetivo;
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setPkprofessor(Integer pkprofessor) {
-		this.pkprofessor = pkprofessor;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getProfessor() {
-		return professor;
+	public String getConteudo() {
+		return conteudo;
 	}
 
-	public void setProfessor(String professor) {
-		this.professor = professor;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setConteudo(String conteudo) {
+		this.conteudo = conteudo;
 	}
 
 	public Disciplina getDisciplina() {
@@ -70,11 +59,19 @@ public class Professor implements Serializable {
 		this.disciplina = disciplina;
 	}
 
+	public PeriodoLetivo getPeriodoLetivo() {
+		return periodoLetivo;
+	}
+
+	public void setPeriodoLetivo(PeriodoLetivo periodoLetivo) {
+		this.periodoLetivo = periodoLetivo;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((pkprofessor == null) ? 0 : pkprofessor.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -86,11 +83,11 @@ public class Professor implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Professor other = (Professor) obj;
-		if (pkprofessor == null) {
-			if (other.pkprofessor != null)
+		Conteudo other = (Conteudo) obj;
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!pkprofessor.equals(other.pkprofessor))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

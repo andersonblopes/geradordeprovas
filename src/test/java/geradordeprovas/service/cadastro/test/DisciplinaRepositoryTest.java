@@ -14,6 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import geradordeprovas.modelo.Disciplina;
+import geradordeprovas.modelo.dao.GeralDAO;
 import geradordeprovas.repository.DisciplinaRepository;
 import geradordeprovas.test.util.DbUnitHelper;
 
@@ -24,6 +25,7 @@ public class DisciplinaRepositoryTest {
 
 	private EntityManager manager;
 	private DisciplinaRepository repository;
+	private GeralDAO<Disciplina> dao;
 
 	@BeforeClass
 	public static void initClass() {
@@ -39,6 +41,7 @@ public class DisciplinaRepositoryTest {
 
 		manager = factory.createEntityManager();
 		this.repository = new DisciplinaRepository(manager);
+		this.dao = new GeralDAO<Disciplina>(manager);
 	}
 
 	@After
@@ -64,7 +67,7 @@ public class DisciplinaRepositoryTest {
 		historia.setDisciplina("HISTORIA");
 		historia.setCargaHoraria(120);
 		historia.setCodMec("003");
-		repository.guardar(historia);
+		dao.salvar(historia);
 
 		Assert.assertEquals("resultado", 0, repository.buscarPorDescricao("disciplina", "HISTORIA").size());
 	}
@@ -76,8 +79,8 @@ public class DisciplinaRepositoryTest {
 		biologia.setDisciplina("BIOLOGIA");
 		biologia.setCargaHoraria(120);
 		biologia.setCodMec("004");
-		repository.guardar(biologia);
-		repository.remover(biologia);
+		dao.salvar(biologia);
+		dao.remover(repository.obterPorID(biologia.getPkdisciplina()));
 		Assert.assertEquals("resultado", 0, repository.buscarPorDescricao("disciplina", "BIOLOGIA").size());
 	}
 

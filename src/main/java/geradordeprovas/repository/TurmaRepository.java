@@ -27,14 +27,6 @@ public class TurmaRepository implements Serializable {
 		return manager.find(Turma.class, pkturma);
 	}
 
-	public Turma guardar(Turma entity) {
-		return manager.merge(entity);
-	}
-
-	public void remover(Turma entity) {
-		manager.remove(manager.getReference(Turma.class, entity.getPkturma()));
-	}
-
 	public List<Turma> listarTodos() {
 		return manager.createQuery("from Turma order by pkturma desc", Turma.class).getResultList();
 	}

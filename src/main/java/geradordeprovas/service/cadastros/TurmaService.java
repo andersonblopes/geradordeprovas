@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import geradordeprovas.modelo.TipoTurma;
 import geradordeprovas.modelo.Turma;
+import geradordeprovas.modelo.dao.GeralDAO;
 import geradordeprovas.repository.TipoTurmaRepository;
 import geradordeprovas.repository.TurmaRepository;
 import geradordeprovas.util.Transacional;
@@ -21,14 +22,17 @@ public class TurmaService implements Serializable {
 	@Inject
 	private TipoTurmaRepository tipoTurmaRepository;
 
+	@Inject
+	protected GeralDAO<Turma> dao;
+
 	@Transacional
 	public void salvar(Turma turma) {
-		turmaRepository.guardar(turma);
+		dao.salvar(turma);
 	}
 
 	@Transacional
 	public void remover(Turma turma) {
-		turmaRepository.remover(turma);
+		dao.remover(turma);
 	}
 
 	@Transacional
@@ -48,4 +52,3 @@ public class TurmaService implements Serializable {
 	}
 
 }
-

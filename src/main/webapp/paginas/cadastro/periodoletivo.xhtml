@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	<ui:define name="titulo">#{msg.ttl_sistema} - #{msg.menu_periodo_letivo}</ui:define>
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:viewAction action="#{periodoLetivoBean.iniciar}" />
+		</f:metadata>
+		<p:panel header="Cadastro de Período letivo" styleClass="panel-formulario">
+			<h:form id="frm-periodo-letivo">
+				<p:focus for="periodo-letivo" />
+				<p:panelGrid columns="5" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-3, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2">
+					<p:panelGrid>
+						<p:outputLabel value="Código" for="codigo" />
+						<p:inputText styleClass="somente-leitura" readonly="true" disabled="#{empty periodoLetivoBean.periodoLetivo}" id="codigo" value="#{periodoLetivoBean.periodoLetivo.id}"/>
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Descrição do período letivo" for="periodo-letivo" />
+						<p:inputText id="periodo-letivo" value="#{periodoLetivoBean.periodoLetivo.periodoLetivo}" required="true" onkeyup="maiusculo(this)" disabled="#{empty periodoLetivoBean.periodoLetivo}" />
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Data início" for="data-inicio" />
+						<p:calendar id="data-inicio" value="#{periodoLetivoBean.periodoLetivo.datainicio}"
+							disabled="#{empty periodoLetivoBean.periodoLetivo}" maskAutoClear="true"
+							locale="#{usuario.locale}" required="true" navigator="true" mask="true"/>							
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="Data fim" for="data-fim" />
+						<p:calendar id="data-fim" value="#{periodoLetivoBean.periodoLetivo.datafim}"
+							disabled="#{empty periodoLetivoBean.periodoLetivo}" mindate="#{periodoLetivoBean.periodoLetivo.datainicio}" maskAutoClear="true"
+							locale="#{usuario.locale}" required="true" navigator="true" mask="true"/>							
+					</p:panelGrid>	
+					<p:panelGrid>
+						<p:outputLabel value="Quantidade de dias" for="qtde-dias" />
+						<p:inputText id="qtde-dias" value="#{periodoLetivoBean.periodoLetivo.dias}" required="true"  onkeyup="maiusculo(this)" disabled="#{empty periodoLetivoBean.periodoLetivo}" />
+					</p:panelGrid>					
+				</p:panelGrid>
+				<p:panelGrid columns="3" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-1, ui-grid-col-1">
+					<p:commandButton value="Novo" action="#{periodoLetivoBean.novo}" rendered="#{empty periodoLetivoBean.periodoLetivo}" update="frm-periodo-letivo" />
+					<p:commandButton value="Salvar" action="#{periodoLetivoBean.salvar}" rendered="#{not empty periodoLetivoBean.periodoLetivo}" update="frm-periodo-letivo frm-localizar" />
+					<p:commandButton value="Excluir" action="#{periodoLetivoBean.remover}" update="frm-periodo-letivo frm-localizar" process="@this" disabled="#{empty periodoLetivoBean.periodoLetivo.id}" >
+						<p:confirm icon="ui-icon-alert" message="Tem certeza que deseja excluir o registro?" />
+					</p:commandButton>
+					<p:commandButton value="Cancelar" action="#{periodoLetivoBean.limpar}" disabled="#{empty periodoLetivoBean.periodoLetivo}"  update="frm-periodo-letivo" immediate="true" resetValues="true" />
+				</p:panelGrid>
+			</h:form>
+			<p:separator />
+			<h:form id="frm-localizar">
+				<p:panelGrid columns="3" layout="grid" id="pnl-pesquisa" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-5, ui-grid-col-1, ui-grid-col-6">
+					<p:inputText id="nome-periodo-letivo" title="Pesquisa pela descrição do período letivo." onkeyup="maiusculo(this)" value="#{periodoLetivoBean.nomePeriodoLetivo}" placeholder="Descrição do período letivo" />
+					<p:commandButton value="Pesquisar" action="#{periodoLetivoBean.pesquisar}" update="frm-localizar" />
+					<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-noborder" style="float: right;">
+						<p:commandLink title="Exportar para XLS" ajax="false" immediate="true" disabled="#{empty periodoLetivoBean.periodosLetivos}">
+							<h:graphicImage library="img/png" name="xls.png" width="15" />
+							<p:dataExporter type="xls" encoding="#{usuario.encoding}" target="lista-de-periodos-letivos" fileName="Relação_periodos_letivos"/>
+						</p:commandLink>
+						<p:commandLink title="Exporat para pdf" ajax="false" immediate="true" disabled="#{empty periodoLetivoBean.periodosLetivos}">
+							<h:graphicImage library="img/png" name="pdf.png" width="15" />
+			   				<p:dataExporter type="pdf" encoding="#{usuario.encoding}" target="lista-de-periodos-letivos" fileName="Relação_periodos_letivos" />
+						</p:commandLink>
+					</p:panelGrid>
+				</p:panelGrid>
+				<p:dataTable 
+					value="#{periodoLetivoBean.periodosLetivos}" 
+					id="lista-de-periodos-letivos" 
+					var="p" 
+					rows="10"
+					emptyMessage="Nenhum registro satisfaz à pesquisa." 
+					paginator="true" reflow="true" 
+					paginatorAlwaysVisible="false" 
+					paginatorPosition="bottom" 
+					selection="#{periodoLetivoBean.periodoLetivo}" 
+					selectionMode="single" 
+					rowKey="#{p.id}">
+					<p:ajax event="rowSelect" update="frm-periodo-letivo" />
+		 			<p:ajax event="rowUnselect" update="frm-periodo-letivo" />
+					<p:column headerText="Código" styleClass="coluna-codigo">
+						<p:outputLabel value="#{p.id}" />
+					</p:column>
+					<p:column headerText="Período letivo">
+						<p:outputLabel value="#{p.periodoLetivo}" />
+					</p:column>
+					<p:column headerText="Data início" styleClass="coluna-cpf">
+						<p:outputLabel value="#{p.datainicio}" >
+							<f:convertDateTime />
+						</p:outputLabel>
+					</p:column>
+					<p:column headerText="Data fim" styleClass="coluna-cpf">
+						<p:outputLabel value="#{p.datafim}" >
+							<f:convertDateTime />
+						</p:outputLabel>
+					</p:column>
+					<p:column headerText="Dias" styleClass="coluna-codigo">
+						<p:outputLabel value="#{p.dias}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>
