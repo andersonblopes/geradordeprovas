@@ -26,13 +26,13 @@
 						<p:outputLabel value="Data início" for="data-inicio" />
 						<p:calendar id="data-inicio" value="#{periodoLetivoBean.periodoLetivo.datainicio}"
 							disabled="#{empty periodoLetivoBean.periodoLetivo}" maskAutoClear="true"
-							locale="#{usuario.locale}" required="true" navigator="true" mask="true"/>							
+							locale="#{autenticacao.locale}" required="true" navigator="true" mask="true"/>							
 					</p:panelGrid>
-					<p:panelGrid>
+					<p:panelGrid>	
 						<p:outputLabel value="Data fim" for="data-fim" />
 						<p:calendar id="data-fim" value="#{periodoLetivoBean.periodoLetivo.datafim}"
 							disabled="#{empty periodoLetivoBean.periodoLetivo}" mindate="#{periodoLetivoBean.periodoLetivo.datainicio}" maskAutoClear="true"
-							locale="#{usuario.locale}" required="true" navigator="true" mask="true"/>							
+							locale="#{autenticacao.locale}" required="true" navigator="true" mask="true"/>							
 					</p:panelGrid>	
 					<p:panelGrid>
 						<p:outputLabel value="Quantidade de dias" for="qtde-dias" />

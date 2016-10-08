@@ -42,8 +42,8 @@ public class Turma implements Serializable {
 	private boolean maisEducacao;
 
 	@ManyToOne
-	@JoinColumn
-	private TipoTurma tipoturma;
+	@JoinColumn(name = "fktipoturma")
+	private TipoTurma tipoTurma;
 
 	public Integer getPkturma() {
 		return pkturma;
@@ -93,12 +93,12 @@ public class Turma implements Serializable {
 		this.maisEducacao = maisEducacao;
 	}
 
-	public TipoTurma getTipoturma() {
-		return tipoturma;
+	public TipoTurma getTipoTurma() {
+		return tipoTurma;
 	}
 
-	public void setTipoturma(TipoTurma tipoturma) {
-		this.tipoturma = tipoturma;
+	public void setTipoTurma(TipoTurma tipoTurma) {
+		this.tipoTurma = tipoTurma;
 	}
 
 	@Override

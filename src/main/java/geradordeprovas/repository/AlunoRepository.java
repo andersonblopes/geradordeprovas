@@ -24,7 +24,7 @@ public class AlunoRepository implements Serializable {
 	}
 
 	public List<Aluno> listarTodos() {
-		return manager.createQuery("from Aluno a left join fetch a.turma order by a.id desc", Aluno.class)
+		return manager.createQuery("from Aluno order by id desc", Aluno.class)
 				.getResultList();
 	}
 

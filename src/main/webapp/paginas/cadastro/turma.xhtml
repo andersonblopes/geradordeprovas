@@ -37,10 +37,9 @@
 					<p:panelGrid>
 						<p:outputLabel value="Tipo turma" for="tipo-turma" />
 						<p:autoComplete id="tipo-turma" 
-							value="#{turmaBean.turma.tipoturma}" 
+							value="#{turmaBean.turma.tipoTurma}" 
 							title="Selecione o tipo da turma"
 							disabled="#{empty turmaBean.turma}"
-							required="true"
 							var="t"
 							itemLabel="#{t.tipoturma}"
 							itemValue="#{t}"
@@ -100,7 +99,7 @@
 						<p:outputLabel value="#{t.turma}" />
 					</p:column>
 					<p:column headerText="Tipo" styleClass="coluna-cpf">
-						<p:outputLabel value="#{t.tipoturma.tipoturma}" />
+						<p:outputLabel value="#{t.tipoTurma.tipoturma}" />
 					</p:column>						
 				</p:dataTable>
 			</h:form>

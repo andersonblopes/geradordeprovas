@@ -4,17 +4,17 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<ui:composition template="/WEB-INF/templates/layout.xhtml">
-	<ui:define name="titulo">#{msg.ttl_sistema} - Erro</ui:define>
-	<ui:define name="cabecalho"></ui:define>
-	<ui:define name="corpo">
-		<div></div>
-		<div class="service-pages">
-			<h1>Ooops!</h1>
-			<h4>Um erro inesperado ocorreu.</h4>
-			<p>Por favor, contacte o Gestor do sistema em sua unidade.</p>
-			<p:link href="../../login.xhtml" value="Login" title="Refazer login." />
-		</div>
-	</ui:define>
-</ui:composition>
+	<h:head>
+		<title>#{msg.ttl_sistema} - Erro</title>
+		<h:outputStylesheet library="css" name="estilo.css" />
+	</h:head>
+	<h:body>
+		<p:panelGrid columns="1" layout="grid" styleClass="ui-grid-col-12 panelgrid-noborder">
+			<div class="service-pages">
+				<h1>Ooops!</h1>
+				<h4>Um erro inesperado ocorreu.</h4>
+				<p>Por favor, contacte o Gestor do sistema.</p>
+			</div>
+		</p:panelGrid>
+	</h:body>
 </html>
