@@ -24,8 +24,7 @@ public class AlunoRepository implements Serializable {
 	}
 
 	public List<Aluno> listarTodos() {
-		return manager.createQuery("from Aluno order by id desc", Aluno.class)
-				.getResultList();
+		return manager.createQuery("from Aluno order by id desc", Aluno.class).getResultList();
 	}
 
 	public List<Aluno> buscarPorDescricao(String campo, String value) {

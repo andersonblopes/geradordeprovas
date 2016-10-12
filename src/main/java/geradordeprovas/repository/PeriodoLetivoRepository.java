@@ -20,7 +20,8 @@ public class PeriodoLetivoRepository implements Serializable {
 	}
 
 	public List<PeriodoLetivo> listarTodos() {
-		return manager.createQuery("from PeriodoLetivo order by periodoLetivo desc", PeriodoLetivo.class).getResultList();
+		return manager.createQuery("from PeriodoLetivo order by periodoLetivo desc", PeriodoLetivo.class)
+				.getResultList();
 	}
 
 	public List<PeriodoLetivo> buscarPorDescricao(String campo, String value) {
@@ -29,9 +30,8 @@ public class PeriodoLetivoRepository implements Serializable {
 	}
 
 	public List<PeriodoLetivo> buscarPorRelacionamento(String campo, Object value) {
-		return manager
-				.createQuery("from PeriodoLetivo where " + campo + " = :value order by periodoLetivo desc", PeriodoLetivo.class)
-				.setParameter("value", value).getResultList();
+		return manager.createQuery("from PeriodoLetivo where " + campo + " = :value order by periodoLetivo desc",
+				PeriodoLetivo.class).setParameter("value", value).getResultList();
 	}
 
 }
