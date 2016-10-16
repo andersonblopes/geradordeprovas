@@ -8,82 +8,152 @@
 	<ui:define name="titulo">#{msg.ttl_sistema} - Cadastro de questão</ui:define>
 	<ui:define name="corpo">
 		<f:metadata>
-			<f:viewAction action="#{disciplinaBean.iniciar}" />
+			<f:viewAction action="#{questaoBean.iniciar}" />
 		</f:metadata>
-		<p:panel header="Cadastro de questão" styleClass="panel-formulario">
-			<h:form id="frm-disciplina">
-				<p:focus for="disciplina" />
-				<p:panelGrid columns="4" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-3, ui-grid-col-2, ui-grid-col-2">
+		<p:panel header="Cadastro de questão" styleClass="panel-formulario" id="page">
+			<h:form id="form">
+				<p:focus for="conteudo" />
+				<p:panelGrid columns="3" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-9, ui-grid-col-2">
 					<p:panelGrid>
 						<p:outputLabel value="Código" for="codigo" />
-						<p:inputText styleClass="somente-leitura" readonly="true" disabled="#{empty disciplinaBean.disciplina}" id="codigo" value="#{disciplinaBean.disciplina.pkdisciplina}"/>
+						<p:inputText styleClass="somente-leitura" readonly="true" disabled="#{empty questaoBean.questao}" id="codigo" value="#{questaoBean.questao.id}"/>
 					</p:panelGrid>
 					<p:panelGrid>
-						<p:outputLabel value="Descrição da disciplina" for="disciplina" />
-						<p:inputText id="disciplina" value="#{disciplinaBean.disciplina.disciplina}" required="true" onkeyup="maiusculo(this)" disabled="#{empty disciplinaBean.disciplina}" />
-					</p:panelGrid>							
+						<p:outputLabel value="Conteúdo" for="conteudo" />
+						<p:autoComplete id="conteudo" 
+							value="#{questaoBean.questao.conteudo}" 
+							title="Selecione o conteúdo"
+							disabled="#{empty questaoBean.questao}"
+							required="true"
+							var="c"
+							itemLabel="#{c.disciplina.disciplina} #{c.conteudo}"
+							itemValue="#{c}"
+							completeMethod="#{questaoBean.listarConteudos}"
+							minQueryLength="1"
+							maxResults="100"
+							queryDelay="1000"
+							effect="blind"
+							dropdownMode="current"
+							forceSelection="true"
+							scrollHeight="150" />
+					</p:panelGrid>	
 					<p:panelGrid>
-						<p:outputLabel value="Carga horária" for="carga-horaria" />
-						<p:inputText id="carga-horaria" value="#{disciplinaBean.disciplina.cargaHoraria}" required="true"  onkeyup="maiusculo(this)" disabled="#{empty disciplinaBean.disciplina}" />
-					</p:panelGrid>
+						<p:outputLabel value="" for="ativo"/><br />
+						<p:selectOneButton id="ativo" value="#{questaoBean.questao.ativo}" disabled="#{empty questaoBean.questao}" >
+				            <f:selectItem itemLabel="Ativo" itemValue="true" />
+				            <f:selectItem itemLabel="Inativo" itemValue="false" />
+				        </p:selectOneButton>
+					</p:panelGrid>					
+				</p:panelGrid>
+				<p:panelGrid columns="1" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-12">
 					<p:panelGrid>
-						<p:outputLabel value="Código MEC" for="codmec" />
-						<p:inputText id="codmec" value="#{disciplinaBean.disciplina.codMec}" required="true" onkeyup="maiusculo(this)" disabled="#{empty disciplinaBean.disciplina}" />
+						<p:outputLabel value="Descrição da questão" for="questao" />
+						<p:inputTextarea id="questao" value="#{questaoBean.questao.questao}" required="true" onkeyup="maiusculo(this)" disabled="#{empty questaoBean.questao}" rows="3" cols="30" counter="display" maxlength="500" placeholder="Este espaço é reservado para a descrição do enunciado da questão."  counterTemplate="{0} caracteres permitidos." autoResize="true" />
+						<h:outputText id="display" />
 					</p:panelGrid>	
 				</p:panelGrid>
 				<p:panelGrid columns="3" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-1, ui-grid-col-1">
-					<p:commandButton value="Novo" action="#{disciplinaBean.novo}" rendered="#{empty disciplinaBean.disciplina}" update="frm-disciplina" />
-					<p:commandButton value="Salvar" action="#{disciplinaBean.salvar}" rendered="#{not empty disciplinaBean.disciplina}" update="frm-disciplina frm-localizar" />
-					<p:commandButton value="Excluir" action="#{disciplinaBean.remover}" update="frm-disciplina frm-localizar" process="@this" disabled="#{empty disciplinaBean.disciplina.pkdisciplina}" >
+					<p:commandButton value="Novo" action="#{questaoBean.novo}" rendered="#{empty questaoBean.questao}" update="form" />
+					<p:commandButton value="Salvar" action="#{questaoBean.salvar}" rendered="#{not empty questaoBean.questao}" update="form frm-localizar" />
+					<p:commandButton value="Excluir" action="#{questaoBean.remover}" update="form frm-localizar" process="@this" disabled="#{empty questaoBean.questao.id}" >
 						<p:confirm message="Tem certeza que deseja excluir o registro?" />
 					</p:commandButton>
-					<p:commandButton value="Cancelar" action="#{disciplinaBean.limpar}" disabled="#{empty disciplinaBean.disciplina}" update="frm-disciplina" immediate="true" resetValues="true" />
+					<p:commandButton value="Cancelar" action="#{questaoBean.limpar}" disabled="#{empty questaoBean.questao}" update="form page" immediate="true" resetValues="true" />
 				</p:panelGrid>
 			</h:form>
 			<p:separator />
-			<h:form id="frm-localizar">
+			<h:form id="frm-localizar" rendered="#{empty questaoBean.questao.id}">
 				<p:panelGrid columns="3" layout="grid" id="pnl-pesquisa" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-5, ui-grid-col-1, ui-grid-col-6">
-					<p:inputText id="nome-disciplina" title="Pesquisa pela descrição da disciplina." onkeyup="maiusculo(this)" value="#{disciplinaBean.nomeDisciplina}" placeholder="Descrição da disciplina" />
-					<p:commandButton value="Buscar" action="#{disciplinaBean.pesquisar}" update="frm-localizar" />
+					<p:inputText id="descr-questao" title="Pesquisa pela descrição da questão." onkeyup="maiusculo(this)" value="#{questaoBean.descricaoQuestao}" placeholder="Descrição da questão" />
+					<p:commandButton value="Buscar" action="#{questaoBean.pesquisar}" update="frm-localizar" />
 					<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-noborder" style="float: right;">
-						<p:commandLink title="Exportar para XLS" ajax="false" immediate="true" disabled="#{empty disciplinaBean.disciplinas}" >
+						<p:commandLink title="Exportar para XLS" ajax="false" immediate="true" disabled="#{empty questaoBean.questoes}" >
 							<h:graphicImage library="img/png" name="xls.png" width="15" />
-							<p:dataExporter type="xls" encoding="#{usuario.encoding}" target="lista-de-disciplinas" fileName="Relação_disciplinas"/>
+							<p:dataExporter type="xls" encoding="#{usuario.encoding}" target="lista-de-questoes" fileName="Relação_questões"/>
 						</p:commandLink>
-						<p:commandLink title="Exporat para pdf" ajax="false" immediate="true" disabled="#{empty disciplinaBean.disciplinas}" >
+						<p:commandLink title="Exporat para pdf" ajax="false" immediate="true" disabled="#{empty questaoBean.questoes}" >
 							<h:graphicImage library="img/png" name="pdf.png" width="15" />
-			   				<p:dataExporter type="pdf" encoding="#{usuario.encoding}" target="lista-de-disciplinas" fileName="Relação_disciplinas" />
+			   				<p:dataExporter type="pdf" encoding="#{usuario.encoding}" target="lista-de-questoes" fileName="Relação_questões" />
 						</p:commandLink>
 					</p:panelGrid>
 				</p:panelGrid>
 				<p:dataTable 
-					value="#{disciplinaBean.disciplinas}" 
-					id="lista-de-disciplinas" 
-					var="d" 
+					value="#{questaoBean.questoes}" 
+					id="lista-de-questoes" 
+					var="q" 
 					rows="6"
 					emptyMessage="Nenhum registro satisfaz à pesquisa." 
+					rendered="#{not empty questaoBean.questoes}"
 					paginator="true" reflow="true" 
 					paginatorAlwaysVisible="false" 
 					paginatorPosition="bottom" 
-					selection="#{disciplinaBean.disciplina}" 
+					selection="#{questaoBean.questao}" 
 					selectionMode="single" 
-					rowKey="#{d.pkdisciplina}">
-					<p:ajax event="rowSelect" update="frm-disciplina" />
-		 			<p:ajax event="rowUnselect" update="frm-disciplina" />
+					rowKey="#{q.id}">
+					<p:ajax event="rowSelect" update="form page" listener="#{questaoBean.pesquisarItens}" />
 					<p:column headerText="Código" styleClass="coluna-codigo">
-						<p:outputLabel value="#{d.pkdisciplina}" />
+						<p:outputLabel value="#{q.id}" />
 					</p:column>
-					<p:column headerText="Disciplina">
-						<p:outputLabel value="#{d.disciplina}" />
+					<p:column headerText="Questão">
+						<p:outputLabel value="#{q.questao}" />
 					</p:column>
-					<p:column headerText="Carga horária" styleClass="coluna-cpf">
-						<p:outputLabel value="#{d.cargaHoraria}" />
-					</p:column>
-					<p:column headerText="Cód MEC" styleClass="coluna-cpf">
-						<p:outputLabel value="#{d.codMec}" />
-					</p:column>						
+					<p:column headerText="Disciplina" styleClass="coluna-cpf">
+						<p:outputLabel value="#{q.conteudo.disciplina.disciplina}" />
+					</p:column>				
 				</p:dataTable>
 			</h:form>
+			<p:panel id="itens" header="Itens da questão selecionada" rendered="#{not empty questaoBean.questao.id}">
+				<h:form id="frm-itens">
+					<p:focus for="descritem" />
+					<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-11, ui-grid-col-1">
+						<p:panelGrid>
+							<p:outputLabel value="Opção de resposta" for="descritem" />
+							<p:inputText id="descritem" value="#{questaoBean.itemQuestao.itemQuestao}" disabled="#{empty questaoBean.itemQuestao}" onkeyup="maiusculo(this)" />
+						</p:panelGrid>
+						<p:panelGrid>
+							<p:outputLabel value="Correta?" for="correto"/><br />
+							<p:selectOneButton id="correto" value="#{questaoBean.itemQuestao.correto}" disabled="#{empty questaoBean.itemQuestao}" >
+					            <f:selectItem itemLabel="S" itemValue="true" />
+					            <f:selectItem itemLabel="N" itemValue="false" />
+				        </p:selectOneButton>
+							<!-- <p:selectBooleanCheckbox id="correto" value="#{questaoBean.itemQuestao.correto}" disabled="#{empty questaoBean.itemQuestao}" /> -->
+						</p:panelGrid>	
+					</p:panelGrid>
+					<p:panelGrid columns="3" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-1, ui-grid-col-1, ui-grid-col-1">
+						<p:commandButton value="Novo" action="#{questaoBean.novoItemQuestao}" oncomplete="PF('bui').show()" rendered="#{empty questaoBean.itemQuestao}" update="frm-itens lista-items-questao" />
+						<p:commandButton value="Salvar" onclick="PF('bui').hide()" action="#{questaoBean.salvarItemQuestao}" rendered="#{not empty questaoBean.itemQuestao}" update="frm-itens lista-items-questao" />
+						<p:commandButton value="Excluir" action="#{questaoBean.removerItemQuestao}" update="frm-itens lista-items-questao" process="@this" disabled="#{empty questaoBean.itemQuestao.id}" >
+							<p:confirm message="Tem certeza que deseja excluir o registro?" />
+						</p:commandButton>
+						<p:commandButton value="Cancelar" action="#{questaoBean.limparItemQuestao}" onclick="PF('bui').hide()" disabled="#{empty questaoBean.itemQuestao}" update="frm-itens" immediate="true" resetValues="true" />
+					</p:panelGrid>
+				</h:form>
+				<h:form id="lista-items-questao">
+					<p:dataTable 
+						value="#{questaoBean.itensQuestao}" 
+						id="lista-de-itens-questao" 
+						var="i" 
+						rows="5"
+						emptyMessage="Nenhum registro satisfaz à pesquisa." 
+						rendered="#{not empty questaoBean.itensQuestao}"
+						paginator="true" reflow="true" 
+						paginatorAlwaysVisible="false" 
+						paginatorPosition="bottom" 
+						selection="#{questaoBean.itemQuestao}" 
+						selectionMode="single" 
+						rowKey="#{i.id}">
+						<p:ajax event="rowSelect" update="frm-itens" oncomplete="PF('bui').show()"  />
+						<p:column headerText="Alternativas">
+							<p:outputLabel value="#{i.itemQuestao}" />
+						</p:column>
+						<p:column headerText="" styleClass="coluna-codigo">
+							<p:graphicImage rendered="#{i.correto}" library="img/jpg" name="true.jpg" title="Opção correta" alt="SIM" style=" max-width: 30%; display: block; margin-left: auto; margin-right: auto;"/>
+							<p:graphicImage rendered="#{not i.correto}" library="img/jpg" name="false.jpg" title="Opção errada" alt="NÃO" style="  max-width: 30%; display: block; margin-left: auto; margin-right: auto;" />
+						</p:column>				
+					</p:dataTable>
+					<p:blockUI block="form" widgetVar="bui"/>
+				</h:form>
+			</p:panel>
 		</p:panel>
 	</ui:define>
 </ui:composition>

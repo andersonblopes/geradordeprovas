@@ -35,6 +35,14 @@ public class ItemQuestao implements Serializable {
 	@JoinColumn(name = "fkquestao")
 	private Questao questao;
 
+	public ItemQuestao() {
+
+	}
+
+	public ItemQuestao(Questao questao) {
+		this.questao = questao;
+	}
+
 	public Long getId() {
 		return id;
 	}

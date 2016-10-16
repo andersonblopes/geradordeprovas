@@ -53,6 +53,10 @@ public class ConteudoService implements Serializable {
 		}
 		return disciplinaRepository.listarTodos();
 	}
+	
+	public List<Conteudo> listarTodos(Disciplina disciplina){
+		return conteudoRepository.buscarPorRelacionamento("disciplina", disciplina);
+	}
 
 	public List<PeriodoLetivo> listarPeriodosLetivos(String periodoLetivo) {
 		if (!periodoLetivo.trim().equals("")) {

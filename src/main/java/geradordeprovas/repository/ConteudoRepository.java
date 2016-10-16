@@ -15,7 +15,7 @@ public class ConteudoRepository implements Serializable {
 	@Inject
 	private EntityManager manager;
 
-	public Conteudo obterPorID(Integer pk) {
+	public Conteudo obterPorID(Long pk) {
 		return manager.find(Conteudo.class, pk);
 	}
 
@@ -26,7 +26,7 @@ public class ConteudoRepository implements Serializable {
 	public List<Conteudo> buscarPorDescricao(String campo, String value) {
 		return manager
 				.createQuery("from Conteudo where " + campo + " like :value order by conteudo desc", Conteudo.class)
-				.setParameter("value", "%" + value.toUpperCase() + "%").getResultList();
+				.setParameter("value", "%" + value.toLowerCase() + "%").getResultList();
 	}
 
 	public List<Conteudo> buscarPorRelacionamento(String campo, Object value) {

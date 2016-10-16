@@ -1,15 +1,11 @@
 package geradordeprovas.controller.cadastros;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import org.primefaces.context.RequestContext;
 
 import geradordeprovas.modelo.TipoTurma;
 import geradordeprovas.modelo.Turma;
@@ -68,12 +64,6 @@ public class TurmaBean implements Serializable {
 
 	public void limpar() {
 		this.turma = null;
-	}
-
-	public void openWindow() {
-		Map<String, Object> opcoes = new HashMap<>();
-		opcoes.put("responsive", true);
-		RequestContext.getCurrentInstance().openDialog("/paginas/cadastros/academico/turma", opcoes, null);
 	}
 
 	public void pesquisar() {

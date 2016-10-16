@@ -18,7 +18,7 @@ public class ConteudoConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value != null && !value.equals("")) {
-			return conteudoRepository.obterPorID(Integer.valueOf(value));
+			return conteudoRepository.obterPorID(Long.valueOf(value));
 		}
 		return null;
 	}

@@ -16,8 +16,9 @@
 		<p:growl autoUpdate="true"/>
 		<h:form id="frm-login">
 			<p:focus for="login"/>
-			<p:panel styleClass="ui-fluid container" header="#{msg.ttl_sistema} - #{msg.msg_acesso_login}" style="margin-top: 5%; width: 275px;">
-				<p:panelGrid columns="1" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-12">
+			<p:panel styleClass="ui-fluid" header="#{msg.ttl_sistema} - #{msg.msg_acesso_login}" style=" display: block; margin:0 auto; width: 275px;">
+				<p:panelGrid columns="1" layout="grid" styleClass="panelgrid-noborder" columnClasses="ui-grid-col-12" style="background: red;">
+					<p:graphicImage library="img/jpg" name="logo.jpg" alt="Logo do cliente" style=" display: block; margin-left: auto; margin-right: auto;" />
 					<p:outputLabel value="#{msg.lbl_login}" for="login" />
 					<p:inputText title="Usuário" placeholder="#{msg.plh_login}" id="login" required="true" value="#{autenticacao.usuario}" />
 					<p:outputLabel value="#{msg.lbl_senha}" for="senha" />
