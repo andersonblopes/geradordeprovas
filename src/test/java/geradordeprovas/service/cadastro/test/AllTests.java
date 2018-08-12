@@ -4,7 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import geradordeprovas.util.App;
+import geradordeprovas.test.util.App;
 
 @RunWith(Suite.class)
 @SuiteClasses({ 

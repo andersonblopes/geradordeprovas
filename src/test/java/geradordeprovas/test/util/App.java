@@ -1,4 +1,4 @@
-package geradordeprovas.util;
+package geradordeprovas.test.util;
 
 import org.flywaydb.core.Flyway;
 import org.junit.Test;

@@ -5,15 +5,6 @@
  	
  	<persistence-unit name="LMSPU">
  		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>geradordeprovas.modelo.Aluno</class>
-		<class>geradordeprovas.modelo.Conteudo</class>
-		<class>geradordeprovas.modelo.Disciplina</class>
-		<class>geradordeprovas.modelo.ItemQuestao</class>
-		<class>geradordeprovas.modelo.PeriodoLetivo</class>
-		<class>geradordeprovas.modelo.Professor</class>
-		<class>geradordeprovas.modelo.Questao</class>
-		<class>geradordeprovas.modelo.TipoTurma</class>
-		<class>geradordeprovas.modelo.Turma</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
 		<properties>
