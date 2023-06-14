@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
-	version="2.2">
-
-	<locale-config>
-		<default-locale>pt_BR</default-locale>
-	</locale-config>
+<faces-config
+		xmlns="http://java.sun.com/xml/ns/javaee"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+    http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+		version="2.0">
 
 	<!-- Arquivo de Propriedades: Internacionalização -->
 	<application>
 		<locale-config>
-			<default-locale>pt_BR</default-locale>
+			<default-locale>en</default-locale>
 			<supported-locale>en</supported-locale>
 			<supported-locale>pt_BR</supported-locale>
 		</locale-config>
 
 		<resource-bundle>
-			<base-name>geradordeprovas.mensagens.mensagens</base-name>
+			<base-name>messages</base-name>
 			<var>msg</var>
 		</resource-bundle>
 	</application>
