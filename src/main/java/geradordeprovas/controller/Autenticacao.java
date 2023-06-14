@@ -1,12 +1,11 @@
 package geradordeprovas.controller;
 
-import java.io.Serializable;
-
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 
 @Named
 @SessionScoped
@@ -21,17 +20,16 @@ public class Autenticacao implements Serializable {
 	private String timeZone = "America/Fortaleza";
 
 	public String autenticar() {
-		if (this.getUsuario().trim().equals("ALUNO") && this.getSenha().equals("aluno")) {
-			return "/paginas/principal?faces-redirect=true";
-		} else if (this.getUsuario().trim().equals("PROFESSOR") && this.getSenha().equals("professor")) {
-			return "/paginas/principal?faces-redirect=true";
-		} else if (this.getUsuario().trim().equals("ADMIN") && this.getSenha().equals("admin")) {
+
+		if ((this.getUsuario().trim().equals("ALUNO") && this.getSenha().equals("aluno"))
+				|| ((this.getUsuario().trim().equals("PROFESSOR") && this.getSenha().equals("professor"))
+				|| ((this.getUsuario().trim().equals("ADMIN") && this.getSenha().equals("admin"))))) {
 			return "/paginas/principal?faces-redirect=true";
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário/senha inválidos!!!", ""));
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-			return null;
+			return "";
 		}
 	}
 
