@@ -10,9 +10,9 @@
 		<properties>
 			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://94.46.166.83:5432/geradordeprovas" /> -->
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/avalia" />
-			<property name="javax.persistence.jdbc.user" value="sonar" />
+			<property name="javax.persistence.jdbc.user" value="postgres" />
 			<!-- <property name="javax.persistence.jdbc.password" value="E27c7000" /> -->
-			<property name="javax.persistence.jdbc.password" value="sonar" />
+			<property name="javax.persistence.jdbc.password" value="root" />
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
  			<property name="javax.persistence.schema-generation.database.action" value="update" />
 			<property name="javax.persistence.schema-generation.create-source" value="metadata" />
